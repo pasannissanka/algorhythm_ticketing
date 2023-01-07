@@ -1,7 +1,9 @@
 import { NextPage } from "next";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import Html5QrcodePlugin from "../component/Html5QrCodeScanner";
+import Html5QrcodePlugin, {
+  Html5QrcodeResult,
+} from "../component/Html5QrCodeScanner";
 import AuthWrapper from "../layouts/AuthWrapper";
 
 const Container = styled.div`
@@ -14,6 +16,7 @@ const Container = styled.div`
 
 const QrWrapper = styled.div`
   display: flex;
+  justify-content: center;
 `;
 
 const Heading = styled.h3`
@@ -24,13 +27,21 @@ const Heading = styled.h3`
 `;
 
 const QRPage: NextPage = () => {
-  const [data, setData] = useState<string>()
+  const [data, setData] = useState<string>();
+  const prevCountRef = useRef<string>();
 
-  console.log(data)
+  console.log(data, prevCountRef.current);
 
-  const onScanSuccess = useCallback((decodedText: any, decodedResult: any) => {
-    setData(decodedText)
-  }, []);
+  useEffect(() => {
+    prevCountRef.current = data;
+  }, [data]);
+
+  const onScanSuccess = useCallback(
+    (decodedText: any, decodedResult: Html5QrcodeResult) => {
+      setData(decodedResult.decodedText);
+    },
+    []
+  );
 
   return (
     <AuthWrapper>

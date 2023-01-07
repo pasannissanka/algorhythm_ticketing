@@ -6,3 +6,7 @@ export interface TicketReqBody {
 }
 
 
+export type ResponseBody = {
+  message: string;
+  data?: any;
+};

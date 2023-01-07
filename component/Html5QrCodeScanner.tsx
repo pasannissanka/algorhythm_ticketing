@@ -1,12 +1,34 @@
 import { Html5QrcodeScanner } from "html5-qrcode";
 import React from "react";
+import styled from "styled-components";
 
 const qrcodeRegionId = "html5qr-code-full-region";
+
+const QrRegion = styled.div`
+  @media (min-width: 320px) {
+    width: 100%;
+  }
+  @media (min-width: 961px) {
+    width: 40%;
+  }
+`;
+
+export interface QrcodeResult {
+  /** Decoded text. */
+  text: string;
+  /** Format that was successfully scanned. */
+  format?: any;
+}
+
+export interface Html5QrcodeResult {
+  decodedText: string;
+  result: QrcodeResult;
+}
 
 class Html5QrcodePlugin extends React.Component<any> {
   html5QrcodeScanner: any;
   render() {
-    return <div style={{width: "100%", minHeight: "100px"}} id={qrcodeRegionId} />;
+    return <QrRegion id={qrcodeRegionId} />;
   }
 
   componentWillUnmount() {
