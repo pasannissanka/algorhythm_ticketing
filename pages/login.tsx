@@ -107,7 +107,7 @@ export default function LoginPage() {
     });
 
     if (res?.status === 200) {
-      Router.replace("/protected");
+      Router.replace("/");
     } else {
       setError({
         errorStatus: true,
