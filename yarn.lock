@@ -2150,6 +2150,11 @@ hoist-non-react-statics@^3.0.0, hoist-non-react-statics@^3.3.0:
   dependencies:
     react-is "^16.7.0"
 
+html5-qrcode@^2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/html5-qrcode/-/html5-qrcode-2.3.4.tgz#7e2b4575a23b10ff5e26d2bf147c8027c1ece389"
+  integrity sha512-VPZrOTG8XR9HmIAhSSiGtJVPErZxKy/DuGc9cPQLburCWZEbvxQGJP9y4K4P+8vdalLtYB/vM5YP1BdWQKZ8jQ==
+
 ieee754@^1.1.13:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.2.1.tgz#8eb7a10a63fff25d15a57b001586d177d1b0d352"

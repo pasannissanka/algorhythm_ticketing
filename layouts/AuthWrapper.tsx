@@ -18,11 +18,11 @@ const Footer = styled.footer`
   border-top: 1px solid rgba(255, 199, 199, 0.7);
 `;
 
-const Main = styled.footer`
+const Main = styled.main`
   display: flex;
   margin-top: 10px;
   margin-bottom: 10px;
-  justify-content: center;
+  /* width: 100%; */
   height: calc(100vh - 10vh - 20px);
 `;
 
