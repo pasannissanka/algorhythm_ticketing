@@ -23,9 +23,7 @@ const Footer = styled.footer`
 `;
 
 const Main = styled.footer`
-  display: flex;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 10px 20px;
   justify-content: center;
   height: calc(100vh - 10vh - 20px);
 `;

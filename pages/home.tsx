@@ -5,9 +5,7 @@ import AuthWrapper from "../layouts/AuthWrapper";
 const HomePage: NextPage = (): JSX.Element => {
   return (
     <AuthWrapper>
-      <div>
-        <Admin />
-      </div>
+      <Admin />
     </AuthWrapper>
   );
 };
