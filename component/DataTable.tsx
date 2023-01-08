@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,7 +9,15 @@ import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import SearchBar from "material-ui-search-bar";
 import styled from "styled-components";
-
+import { Alert as AL, TicketReqBody } from "../utils/types/index";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Stack from "@mui/material/Stack";
+import EditIcon from "@mui/icons-material/Edit";
+import Chip from "@mui/material/Chip";
+import { Alert, Grid } from "@mui/material";
+import { Edit } from "@material-ui/icons";
 interface Details {
   name: string;
   email: string;
@@ -28,39 +36,6 @@ function createData(
   return { name, email, phone, ticketType, status };
 }
 
-const data = [
-  createData(
-    "user 1",
-    "abc@gmail.com",
-    "01123233434",
-    "undergraduate",
-    "full-paid"
-  ),
-  createData("user 2", "abd@gmail.com", "01123233434", "alumni", "full-paid"),
-  createData(
-    "user 3",
-    "absc@gmail.com",
-    "01123233434",
-    "undergraduate",
-    "full-paid"
-  ),
-  createData("user 4", "abasc@gmail.com", "01123233434", "alumni", "full-paid"),
-  createData(
-    "user 5",
-    "absadc@gmail.com",
-    "01123233434",
-    "alumni",
-    "Half-paid"
-  ),
-  createData(
-    "user 6",
-    "absdc@gmail.com",
-    "01123233434",
-    "undergraduate",
-    "full-paid"
-  ),
-];
-
 const SearchBarWrapper = styled.div`
   width: 50%;
   margin: 20px 10px;
@@ -70,17 +45,35 @@ const TableWrapper = styled.div`
   margin: 10px;
 `;
 
-export default function BasicTable() {
+type TableProps = {
+  callbackEnd: boolean;
+  setInitialValues: (arg: TicketReqBody) => void;
+  setOpen: (arg: boolean) => void;
+  setOperation: (arg: string) => void;
+};
+
+export default function BasicTable({
+  callbackEnd,
+  setInitialValues,
+  setOpen,
+  setOperation,
+}: TableProps) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [rows, setRows] = useState<Details[]>(data);
+  const [data, setData] = useState<TicketReqBody[]>([]);
+  const [rows, setRows] = useState<TicketReqBody[]>(data);
   const [searched, setSearched] = useState<string>("");
+  const [alert, setAlert] = React.useState<AL>({
+    show: false,
+    message: "",
+    severity: "success",
+  });
 
   const requestSearch = (searchedVal: string) => {
     const text = searchedVal.toLowerCase();
     if (text) {
       // eslint-disable-next-line
-      const filteredRows = data.filter((item) => {
+      const filteredRows = rows.filter((item) => {
         const str = JSON.stringify(item).toLowerCase();
 
         if (str.search(text) >= 0) return item;
@@ -110,6 +103,134 @@ export default function BasicTable() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  // load data from api
+
+  const loadData = async () => {
+    const results = await fetch("/api/ticket", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (results.status === 200) {
+      const { data } = await results.json();
+
+      if (data) {
+        setData(data);
+        setRows(data);
+      }
+    } else {
+      setAlert({
+        show: true,
+        message: "Data loading failed!",
+        severity: "error",
+      });
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, [callbackEnd]);
+
+  const markAttendance = async (id: string, attendance: string) => {
+    const results = await fetch(`/api/ticket/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        attendance,
+      }),
+    });
+
+    if (results.status === 200) {
+      loadData();
+      setAlert({
+        show: true,
+        message: "Marked Attendance Successfully!",
+        severity: "success",
+      });
+
+      setTimeout(() => {
+        setAlert({
+          show: false,
+          message: "Marked Attendance Successfully!",
+          severity: "success",
+        });
+      }, 2000);
+    } else {
+      setAlert({
+        show: true,
+        message: "Task Failed!",
+        severity: "error",
+      });
+
+      setTimeout(() => {
+        setAlert({
+          show: false,
+          message: "",
+          severity: "error",
+        });
+      }, 2000);
+    }
+  };
+
+  const deleteParticipant = async (id: string) => {
+    const results = await fetch(`/api/ticket/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (results.status === 200) {
+      loadData();
+      setAlert({
+        show: true,
+        message: "Participant Deleted Successfully!",
+        severity: "success",
+      });
+
+      setTimeout(() => {
+        setAlert({
+          show: false,
+          message: "Participant Deleted Successfully!",
+          severity: "success",
+        });
+      }, 2000);
+    } else {
+      setAlert({
+        show: true,
+        message: "Task Failed!",
+        severity: "error",
+      });
+
+      setTimeout(() => {
+        setAlert({
+          show: false,
+          message: "",
+          severity: "error",
+        });
+      }, 2000);
+    }
+  };
+
+  const Edit = (row: TicketReqBody) => {
+    setInitialValues({
+      name: row?.name,
+      email: row?.email,
+      phone_number: row?.phone_number,
+      type: row?.type,
+      payment_status: row?.payment_status,
+      _id: row?._id,
+      status: row?.status,
+    });
+    setOpen(true);
+    setOperation("edit");
+  };
+
   return (
     <>
       <SearchBarWrapper>
@@ -129,6 +250,8 @@ export default function BasicTable() {
                 <TableCell align="right">Phone</TableCell>
                 <TableCell align="right">Ticket Type</TableCell>
                 <TableCell align="right">Payment Status</TableCell>
+                <TableCell align="right">Attendance</TableCell>
+                <TableCell align="center">Settings</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -147,10 +270,57 @@ export default function BasicTable() {
                     {row.name}
                   </TableCell>
                   <TableCell align="right">{row.email}</TableCell>
-                  <TableCell align="right">{row.phone}</TableCell>
-                  <TableCell align="right">{row.ticketType}</TableCell>
+                  <TableCell align="right">{row.phone_number}</TableCell>
+                  <TableCell align="right">{row.type}</TableCell>
 
-                  <TableCell align="right">{row.status}</TableCell>
+                  <TableCell align="right">
+                    {row.payment_status === "FULL_PAID" ? (
+                      <Chip
+                        label="FULL-PAID"
+                        color="success"
+                        variant="outlined"
+                      />
+                    ) : row.payment_status === "HALF_PAID" ? (
+                      <Chip
+                        label="HALF-PAID"
+                        color="warning"
+                        variant="outlined"
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </TableCell>
+                  <TableCell align="right">
+                    {row.status === "ATTENDED" ? (
+                      <Chip
+                        label="ATTENDED"
+                        color="success"
+                        variant="outlined"
+                        onClick={() => markAttendance(row._id, "NOT_ATTENDED")}
+                      />
+                    ) : row.status === "NOT_ATTENDED" ? (
+                      <Chip
+                        label="NOT-ATTENDED"
+                        color="warning"
+                        variant="outlined"
+                        onClick={() => markAttendance(row._id, "ATTENDED")}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </TableCell>
+                  <TableCell align="right">
+                    <Stack direction="row" spacing={1}>
+                      <IconButton aria-label="edit">
+                        <EditIcon onClick={() => Edit(row)} />
+                      </IconButton>
+                      <IconButton aria-label="delete" color="primary">
+                        <DeleteIcon
+                          onClick={() => deleteParticipant(row._id)}
+                        />
+                      </IconButton>
+                    </Stack>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -166,6 +336,11 @@ export default function BasicTable() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </TableWrapper>
+      {alert.show && (
+        <Grid item md={12} style={{ margin: 10 }}>
+          <Alert severity={alert.severity}>{alert.message}</Alert>
+        </Grid>
+      )}
     </>
   );
 }

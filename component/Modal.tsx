@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -12,73 +12,158 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  Alert,
 } from "@mui/material";
 import { TextField } from "formik-mui";
 import { Form, FormikProvider, useFormik, Field } from "formik";
 import * as Yup from "yup";
+import { Alert as AL, TicketReqBody } from "../utils/types/index";
 
 type ModalProps = {
   open: boolean;
   setOpen: (arg: boolean) => void;
+  setCallBackEnd: (arg: boolean) => void;
+  callbackEnd: boolean;
+  initialValues: TicketReqBody;
+  operation: string;
 };
 
-export default function Modal({ open, setOpen }: ModalProps) {
+export default function Modal({
+  open,
+  setOpen,
+  setCallBackEnd,
+  callbackEnd,
+  initialValues,
+  operation,
+}: ModalProps) {
   const handleClose = (reason: string) => {
     if (reason && reason == "backdropClick") return;
     setOpen(false);
   };
 
-  const [ticketType, setTicketType] = React.useState("");
-  const [ticketStatus, setTicketStatus] = React.useState("");
+  const [ticketType, setTicketType] = useState("");
+  const [ticketStatus, setTicketStatus] = useState("");
+
+  const [alert, setAlert] = useState<AL>({
+    show: false,
+    message: "",
+    severity: "success",
+  });
 
   const handleChange = (event: SelectChangeEvent, status: string) => {
     if (status === "ticketType") {
       setTicketType(event.target.value as string);
-      setFieldValue("ticketType", event.target.value as string);
+      setFieldValue("type", event.target.value as string);
     }
     if (status === "ticketStatus") {
       setTicketStatus(event.target.value as string);
-      setFieldValue("ticketStatus", event.target.value as string);
+      setFieldValue("payment_status", event.target.value as string);
     }
   };
 
-  const phoneRegExp = /^(?:7|0|(?:\+94))[0-9]{9,10}$/;
+  const phone_numberRegExp = /^(?:7|0|(?:\+94))[0-9]{9,10}$/;
+  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().max(30, "Max length for the name is 30.").required(),
-    email: Yup.string().max(30, "Max length for the name is 30.").required(),
-    phone: Yup.string()
-      .matches(phoneRegExp, "Phone number is not valid")
-      .required(),
-    ticketType: Yup.string().required(),
-    ticketStatus: Yup.string().required(),
+    email: Yup.string()
+      .matches(emailRegex, "Email is not valid")
+      .max(30, "Max length for the name is 30.")
+      .required("Email is required"),
+    phone_number: Yup.string()
+      .matches(phone_numberRegExp, "Phone number is not valid")
+      .required("Phone number is required"),
+    type: Yup.string().required(),
+    payment_status: Yup.string().required(),
   });
 
   const formik = useFormik({
     enableReinitialize: true,
-    initialValues: {
-      // eslint-disable-next-line
-      name: "",
-      email: "",
-      ticketType: "",
-      phone: "",
-    },
+    initialValues: initialValues,
     validationSchema: validationSchema,
 
     // eslint-disable-next-line
     onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
-      console.log("val", values);
+      let results;
+      if (operation === "add") {
+        results = await fetch("/api/ticket", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+      }
 
-      resetForm();
-      setTicketType("");
-      setFieldValue("ticketType", "");
-      setTicketStatus("");
-      setFieldValue("ticketStatus", "");
+      if (operation === "edit") {
+        results = await fetch(`/api/ticket/${initialValues?._id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        });
+      }
+
+      if (results?.status === 200) {
+        resetForm();
+        setTicketType("");
+        setFieldValue("type", "");
+        setTicketStatus("");
+        setFieldValue("payment_status", "");
+        setAlert({
+          show: true,
+          message: `User ${
+            operation === "add" ? "Added" : "Updated"
+          } Successfully!`,
+          severity: "success",
+        });
+
+        setTimeout(() => {
+          setAlert({
+            show: false,
+            message: "",
+            severity: "success",
+          });
+        }, 2000);
+
+        if (operation === "edit") {
+          setOpen(false);
+        }
+
+        setCallBackEnd(!callbackEnd);
+      } else {
+        setAlert({
+          show: true,
+          message: "Task Failed!",
+          severity: "error",
+        });
+
+        setTimeout(() => {
+          setAlert({
+            show: false,
+            message: "",
+            severity: "error",
+          });
+        }, 2000);
+      }
     },
   });
 
   const { handleSubmit, getFieldProps, values, setFieldValue, isValid, dirty } =
     formik;
+
+  useEffect(() => {
+    if (initialValues?.type) {
+      setTicketType(initialValues?.type);
+      setFieldValue("type", initialValues?.type);
+    }
+
+    if (initialValues?.payment_status) {
+      setTicketStatus(initialValues?.payment_status);
+      setFieldValue("payment_status", initialValues?.payment_status);
+    }
+  }, [initialValues]);
 
   return (
     <div>
@@ -145,7 +230,7 @@ export default function Modal({ open, setOpen }: ModalProps) {
                   <Field
                     id="outlined-basic"
                     label="Phone Number"
-                    {...getFieldProps("phone")}
+                    {...getFieldProps("phone_number")}
                     variant="outlined"
                     fullWidth
                     component={TextField}
@@ -166,8 +251,8 @@ export default function Modal({ open, setOpen }: ModalProps) {
                       autoWidth
                       label="Ticket Type"
                     >
-                      <MenuItem value={"undergraduate"}>Undergraduate</MenuItem>
-                      <MenuItem value={"alumni"}>Alumni</MenuItem>
+                      <MenuItem value={"UNDERGRADUATE"}>Undergraduate</MenuItem>
+                      <MenuItem value={"ALUMIN"}>Alumin</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -183,10 +268,10 @@ export default function Modal({ open, setOpen }: ModalProps) {
                       value={ticketStatus}
                       onChange={(e) => handleChange(e, "ticketStatus")}
                       autoWidth
-                      label="Ticket Type"
+                      label="Ticket Status"
                     >
-                      <MenuItem value={"full-paid"}>Full-Paid</MenuItem>
-                      <MenuItem value={"half-paid"}>half-paid</MenuItem>
+                      <MenuItem value={"FULL_PAID"}>Full-Paid</MenuItem>
+                      <MenuItem value={"HALF_PAID"}>Half-Paid</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -204,10 +289,15 @@ export default function Modal({ open, setOpen }: ModalProps) {
                     type="submit"
                     disabled={!dirty || !isValid}
                   >
-                    ADD
+                    {initialValues?.email ? "Edit" : "Add"}
                   </Button>
                 </Grid>
               </Grid>
+              {alert.show && (
+                <Grid item md={12}>
+                  <Alert severity={alert.severity}>{alert.message}</Alert>
+                </Grid>
+              )}
             </DialogContent>
           </Form>
         </FormikProvider>
