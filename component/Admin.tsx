@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import DataTable from "./DataTable";
 import styled from "styled-components";
 import Modal from "./Modal";
@@ -11,9 +11,26 @@ const ButtonContainer = styled.div`
 `;
 
 export default function Admin() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [operation, setOperation] = useState("add");
+  const [callbackEnd, setCallBackEnd] = useState(false);
+  const [initialValues, setInitialValues] = useState({
+    name: "",
+    email: "",
+    type: "",
+    phone_number: "",
+    payment_status: "",
+  });
 
   const handleClickOpen = () => {
+    setOperation("add");
+    setInitialValues({
+      name: "",
+      email: "",
+      type: "",
+      phone_number: "",
+      payment_status: "",
+    });
     setOpen(true);
   };
 
@@ -24,8 +41,20 @@ export default function Admin() {
           Add
         </Button>
       </ButtonContainer>
-      <DataTable />
-      <Modal open={open} setOpen={setOpen} />
+      <DataTable
+        callbackEnd={callbackEnd}
+        setInitialValues={setInitialValues}
+        setOpen={setOpen}
+        setOperation={setOperation}
+      />
+      <Modal
+        open={open}
+        setOpen={setOpen}
+        setCallBackEnd={setCallBackEnd}
+        callbackEnd={callbackEnd}
+        initialValues={initialValues}
+        operation={operation}
+      />
     </div>
   );
 }

@@ -5,8 +5,6 @@ import { ResponseBody, TicketReqBody } from "../../../utils/types";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 
-
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseBody>
@@ -18,13 +16,15 @@ export default async function handler(
       // handle ticket add
       try {
         const { Ticket } = await connect();
-        const { email, name, phone_number, type } = req.body as TicketReqBody;
+        const { email, name, phone_number, type, payment_status } =
+          req.body as TicketReqBody;
 
         const ticket = await Ticket.create({
           email,
           name,
           phone_number,
           type,
+          payment_status,
         });
         res.status(200).json({ message: "Success", data: ticket });
       } catch (error: any) {
