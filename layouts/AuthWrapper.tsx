@@ -23,7 +23,6 @@ const Footer = styled.footer`
 `;
 
 const Main = styled.main`
-  display: flex;
   margin-top: 10px;
   margin-bottom: 10px;
   /* width: 100%; */
