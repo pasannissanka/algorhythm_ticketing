@@ -9,7 +9,7 @@ export const connect = async () => {
     .catch((err) => console.log(err));
   console.log("Mongoose Connection Established");
 
-  const Ticket = mongoose.model<Ticket>("Ticket", TicketSchema);
+  const Ticket: mongoose.Model<Ticket> = mongoose.models.Ticket || mongoose.model("Ticket", TicketSchema);
 
   return { conn, Ticket };
 };
