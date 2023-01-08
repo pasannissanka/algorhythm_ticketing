@@ -157,11 +157,17 @@ export default function Modal({
     if (initialValues?.type) {
       setTicketType(initialValues?.type);
       setFieldValue("type", initialValues?.type);
+    } else {
+      setTicketType("");
+      setFieldValue("type", "");
     }
 
     if (initialValues?.payment_status) {
       setTicketStatus(initialValues?.payment_status);
       setFieldValue("payment_status", initialValues?.payment_status);
+    } else {
+      setTicketStatus("");
+      setFieldValue("payment_status", "");
     }
   }, [initialValues]);
 
