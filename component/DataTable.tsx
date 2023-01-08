@@ -10,21 +10,45 @@ import TablePagination from "@mui/material/TablePagination";
 
 function createData(
   name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
+  email: string,
+  phone: string,
+  ticketType: string,
+  status: string
 ) {
-  return { name, calories, fat, carbs, protein };
+  return { name, email, phone, ticketType, status };
 }
 
 const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("dcs", 159, 6.0, 24, 4.0),
-  createData("s", 237, 9.0, 37, 4.3),
-  createData("a", 262, 16.0, 24, 6.0),
+  createData(
+    "user 1",
+    "abc@gmail.com",
+    "01123233434",
+    "undergraduate",
+    "full-paid"
+  ),
+  createData("user 2", "abd@gmail.com", "01123233434", "alumni", "full-paid"),
+  createData(
+    "user 3",
+    "absc@gmail.com",
+    "01123233434",
+    "undergraduate",
+    "full-paid"
+  ),
+  createData("user 4", "abasc@gmail.com", "01123233434", "alumni", "full-paid"),
+  createData(
+    "user 5",
+    "absadc@gmail.com",
+    "01123233434",
+    "alumni",
+    "Half-paid"
+  ),
+  createData(
+    "user 6",
+    "absdc@gmail.com",
+    "01123233434",
+    "undergraduate",
+    "full-paid"
+  ),
 ];
 
 export default function BasicTable() {
@@ -50,11 +74,11 @@ export default function BasicTable() {
         <Table sx={{ minWidth: 650 }} aria-label="simple table" size="small">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell align="right">Email</TableCell>
+              <TableCell align="right">Phone</TableCell>
+              <TableCell align="right">Ticket Type</TableCell>
+              <TableCell align="right">Payment Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -69,10 +93,11 @@ export default function BasicTable() {
                 <TableCell component="th" scope="row">
                   {row.name}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="right">{row.email}</TableCell>
+                <TableCell align="right">{row.phone}</TableCell>
+                <TableCell align="right">{row.ticketType}</TableCell>
+
+                <TableCell align="right">{row.status}</TableCell>
               </TableRow>
             ))}
           </TableBody>
