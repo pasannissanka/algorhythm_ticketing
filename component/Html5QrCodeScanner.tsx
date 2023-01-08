@@ -1,5 +1,9 @@
 import { Html5QrcodeScanner } from "html5-qrcode";
-import React from "react";
+import type {
+  QrcodeSuccessCallback,
+  QrcodeErrorCallback,
+} from "html5-qrcode/core";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const qrcodeRegionId = "html5qr-code-full-region";
@@ -25,57 +29,68 @@ export interface Html5QrcodeResult {
   result: QrcodeResult;
 }
 
-class Html5QrcodePlugin extends React.Component<any> {
-  html5QrcodeScanner: any;
-  render() {
-    return <QrRegion id={qrcodeRegionId} />;
+type Html5QrScannerProps = {
+  qrCodeSuccessCallback: QrcodeSuccessCallback;
+  qrCodeErrorCallback?: QrcodeErrorCallback;
+  verbose?: boolean;
+  fps?: number;
+  qrbox?: number;
+  aspectRatio?: number;
+  disableFlip?: boolean;
+};
+
+export const Html5QrScanner = (props: Html5QrScannerProps) => {
+  const html5QrcodeScanner = useRef<Html5QrcodeScanner>();
+  const divRef = useRef<HTMLDivElement>(null);
+
+  function createConfig(props: Html5QrScannerProps) {
+    let config: any = {};
+    if (props.fps) {
+      config.fps = props.fps;
+    }
+    if (props.qrbox) {
+      config.qrbox = props.qrbox;
+    }
+    if (props.aspectRatio) {
+      config.aspectRatio = props.aspectRatio;
+    }
+    if (props.disableFlip !== undefined) {
+      config.disableFlip = props.disableFlip;
+    }
+    return config;
   }
 
-  componentWillUnmount() {
-    // TODO(mebjas): See if there is a better way to handle
-    //  promise in `componentWillUnmount`.
-    this.html5QrcodeScanner.clear().catch((error: any) => {
-      console.error("Failed to clear html5QrcodeScanner. ", error);
-    });
-  }
+  useEffect(() => {
+    const div = divRef.current;
+    let config = createConfig(props);
+    let verbose = props.verbose === true;
 
-  componentDidMount() {
-    // Creates the configuration object for Html5QrcodeScanner.
-    function createConfig(props: any) {
-      let config: any = {};
-      if (props.fps) {
-        config.fps = props.fps;
-      }
-      if (props.qrbox) {
-        config.qrbox = props.qrbox;
-      }
-      if (props.aspectRatio) {
-        config.aspectRatio = props.aspectRatio;
-      }
-      if (props.disableFlip !== undefined) {
-        config.disableFlip = props.disableFlip;
-      }
-      return config;
+    if (html5QrcodeScanner.current === undefined) {
+      html5QrcodeScanner.current = new Html5QrcodeScanner(
+        qrcodeRegionId,
+        config,
+        verbose
+      );
+      html5QrcodeScanner.current.render(
+        props.qrCodeSuccessCallback,
+        props.qrCodeErrorCallback
+      );
     }
 
-    var config = createConfig(this.props);
-    var verbose = this.props.verbose === true;
+    return () => {
+      console.log(divRef, html5QrcodeScanner)
+      div?.removeChild(div?.children[0]);
+      html5QrcodeScanner.current?.clear();
+      html5QrcodeScanner.current = undefined;
+    };
+  }, [props]);
 
-    // Suceess callback is required.
-    if (!this.props.qrCodeSuccessCallback) {
-      throw "qrCodeSuccessCallback is required callback.";
-    }
-
-    this.html5QrcodeScanner = new Html5QrcodeScanner(
-      qrcodeRegionId,
-      config,
-      verbose
-    );
-    this.html5QrcodeScanner.render(
-      this.props.qrCodeSuccessCallback,
-      this.props.qrCodeErrorCallback
-    );
-  }
-}
-
-export default Html5QrcodePlugin;
+  return (
+    <>
+      {/* {html5QrcodeScanner.current && 
+    
+    } */}
+      <QrRegion ref={divRef} id={qrcodeRegionId} />
+    </>
+  );
+};

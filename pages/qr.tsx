@@ -1,8 +1,9 @@
 import { NextPage } from "next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import Html5QrcodePlugin, {
+import {
   Html5QrcodeResult,
+  Html5QrScanner,
 } from "../component/Html5QrCodeScanner";
 import AuthWrapper from "../layouts/AuthWrapper";
 
@@ -48,11 +49,12 @@ const QRPage: NextPage = () => {
       <Container>
         <Heading>Scan QR Code</Heading>
         <QrWrapper>
-          <Html5QrcodePlugin
+          <Html5QrScanner
             fps={10}
             qrbox={250}
             disableFlip={false}
             qrCodeSuccessCallback={onScanSuccess}
+            verbose={false}
           />
         </QrWrapper>
       </Container>
