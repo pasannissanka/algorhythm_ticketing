@@ -1,30 +1,39 @@
-import React, { useEffect, useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import {
+  Alert,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
-  Alert,
 } from "@mui/material";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import IconButton from "@mui/material/IconButton";
+import { Field, Form, FormikProvider, useFormik } from "formik";
 import { TextField } from "formik-mui";
-import { Form, FormikProvider, useFormik, Field } from "formik";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { Alert as AL, TicketReqBody } from "../utils/types/index";
+import { Alert as AL } from "../utils/types/index";
+
+export interface TicketValues {
+  _id?: string;
+  name: string;
+  email: string;
+  phone_number: string;
+  type: "UNDERGRADUATE" | "ALUMIN" | "";
+  payment_status: "FULL_PAID" | "HALF_PAID" | "NOT_PAID";
+}
 
 type ModalProps = {
   open: boolean;
   setOpen: (arg: boolean) => void;
   setCallBackEnd: (arg: boolean) => void;
   callbackEnd: boolean;
-  initialValues: TicketReqBody;
+  initialValues: TicketValues;
   operation: string;
 };
 

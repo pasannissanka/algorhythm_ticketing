@@ -78,8 +78,6 @@ export const Html5QrScanner = (props: Html5QrScannerProps) => {
     }
 
     return () => {
-      console.log(divRef, html5QrcodeScanner)
-      div?.removeChild(div?.children[0]);
       html5QrcodeScanner.current?.clear();
       html5QrcodeScanner.current = undefined;
     };

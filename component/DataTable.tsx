@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import { Alert, Grid } from "@mui/material";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
 import SearchBar from "material-ui-search-bar";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Alert as AL, TicketReqBody } from "../utils/types/index";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Stack from "@mui/material/Stack";
-import EditIcon from "@mui/icons-material/Edit";
-import Chip from "@mui/material/Chip";
-import { Alert, Grid } from "@mui/material";
-import { Edit } from "@material-ui/icons";
 interface Details {
   name: string;
   email: string;
@@ -36,13 +36,26 @@ function createData(
   return { name, email, phone, ticketType, status };
 }
 
+const Container = styled.div`
+  margin: 10px;
+`;
+
 const SearchBarWrapper = styled.div`
-  width: 50%;
-  margin: 20px 10px;
+  width: 100%;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  gap: 10px;
 `;
 
 const TableWrapper = styled.div`
-  margin: 10px;
+  /* margin: 10px; */
 `;
 
 type TableProps = {
@@ -50,6 +63,7 @@ type TableProps = {
   setInitialValues: (arg: TicketReqBody) => void;
   setOpen: (arg: boolean) => void;
   setOperation: (arg: string) => void;
+  onClickAdd: () => void;
 };
 
 export default function BasicTable({
@@ -57,7 +71,9 @@ export default function BasicTable({
   setInitialValues,
   setOpen,
   setOperation,
+  onClickAdd,
 }: TableProps) {
+  const router = useRouter();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [data, setData] = useState<TicketReqBody[]>([]);
@@ -233,109 +249,135 @@ export default function BasicTable({
 
   return (
     <>
-      <SearchBarWrapper>
-        <SearchBar
-          value={searched}
-          onChange={(searchVal) => requestSearch(searchVal)}
-          onCancelSearch={() => cancelSearch()}
-        />
-      </SearchBarWrapper>
-      <TableWrapper>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table" size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell align="right">Email</TableCell>
-                <TableCell align="right">Phone</TableCell>
-                <TableCell align="right">Ticket Type</TableCell>
-                <TableCell align="right">Payment Status</TableCell>
-                <TableCell align="right">Attendance</TableCell>
-                <TableCell align="center">Settings</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {(rowsPerPage > 0
-                ? rows.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                : rows
-              ).map((row) => (
-                <TableRow
-                  key={row.name}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.email}</TableCell>
-                  <TableCell align="right">{row.phone_number}</TableCell>
-                  <TableCell align="right">{row.type}</TableCell>
-
-                  <TableCell align="right">
-                    {row.payment_status === "FULL_PAID" ? (
-                      <Chip
-                        label="FULL-PAID"
-                        color="success"
-                        variant="outlined"
-                      />
-                    ) : row.payment_status === "HALF_PAID" ? (
-                      <Chip
-                        label="HALF-PAID"
-                        color="warning"
-                        variant="outlined"
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </TableCell>
-                  <TableCell align="right">
-                    {row.status === "ATTENDED" ? (
-                      <Chip
-                        label="ATTENDED"
-                        color="success"
-                        variant="outlined"
-                        onClick={() => markAttendance(row._id, "NOT_ATTENDED")}
-                      />
-                    ) : row.status === "NOT_ATTENDED" ? (
-                      <Chip
-                        label="NOT-ATTENDED"
-                        color="warning"
-                        variant="outlined"
-                        onClick={() => markAttendance(row._id, "ATTENDED")}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </TableCell>
-                  <TableCell align="right">
-                    <Stack direction="row" spacing={1}>
-                      <IconButton aria-label="edit">
-                        <EditIcon onClick={() => Edit(row)} />
-                      </IconButton>
-                      <IconButton aria-label="delete" color="primary">
-                        <DeleteIcon
-                          onClick={() => deleteParticipant(row._id)}
-                        />
-                      </IconButton>
-                    </Stack>
-                  </TableCell>
+      <Container>
+        <SearchBarWrapper>
+          <SearchBar
+            value={searched}
+            onChange={(searchVal) => requestSearch(searchVal)}
+            onCancelSearch={() => cancelSearch()}
+          />
+          <ButtonWrapper>
+            <Button
+              size="small"
+              variant="contained"
+              color="secondary"
+              onClick={onClickAdd}
+            >
+              Add
+            </Button>
+            <Button
+              size="small"
+              variant="contained"
+              color="primary"
+              onClick={() => router.push("/qr")}
+            >
+              QR
+            </Button>
+          </ButtonWrapper>
+        </SearchBarWrapper>
+        <TableWrapper>
+          <TableContainer component={Paper}>
+            <Table
+              sx={{ minWidth: 650 }}
+              aria-label="simple table"
+              size="small"
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell align="right">Email</TableCell>
+                  <TableCell align="right">Phone</TableCell>
+                  <TableCell align="right">Ticket Type</TableCell>
+                  <TableCell align="right">Payment Status</TableCell>
+                  <TableCell align="right">Attendance</TableCell>
+                  <TableCell align="center">Settings</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-          colSpan={3}
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </TableWrapper>
+              </TableHead>
+              <TableBody>
+                {(rowsPerPage > 0
+                  ? rows.slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage
+                    )
+                  : rows
+                ).map((row) => (
+                  <TableRow
+                    key={row.name}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableCell align="right">{row.email}</TableCell>
+                    <TableCell align="right">{row.phone_number}</TableCell>
+                    <TableCell align="right">{row.type}</TableCell>
+
+                    <TableCell align="right">
+                      {row.payment_status === "FULL_PAID" ? (
+                        <Chip
+                          label="FULL-PAID"
+                          color="success"
+                          variant="outlined"
+                        />
+                      ) : row.payment_status === "HALF_PAID" ? (
+                        <Chip
+                          label="HALF-PAID"
+                          color="warning"
+                          variant="outlined"
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </TableCell>
+                    <TableCell align="right">
+                      {row.status === "ATTENDED" ? (
+                        <Chip
+                          label="ATTENDED"
+                          color="success"
+                          variant="outlined"
+                          onClick={() =>
+                            markAttendance(row._id, "NOT_ATTENDED")
+                          }
+                        />
+                      ) : row.status === "NOT_ATTENDED" ? (
+                        <Chip
+                          label="NOT-ATTENDED"
+                          color="warning"
+                          variant="outlined"
+                          onClick={() => markAttendance(row._id, "ATTENDED")}
+                        />
+                      ) : (
+                        ""
+                      )}
+                    </TableCell>
+                    <TableCell align="right">
+                      <Stack direction="row" spacing={1}>
+                        <IconButton aria-label="edit">
+                          <EditIcon onClick={() => Edit(row)} />
+                        </IconButton>
+                        <IconButton aria-label="delete" color="primary">
+                          <DeleteIcon
+                            onClick={() => deleteParticipant(row._id)}
+                          />
+                        </IconButton>
+                      </Stack>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+            colSpan={3}
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </TableWrapper>
+      </Container>
       {alert.show && (
         <Grid item md={12} style={{ margin: 10 }}>
           <Alert severity={alert.severity}>{alert.message}</Alert>

@@ -1,18 +1,30 @@
 import { useSession } from "next-auth/react";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { ReactNode, useEffect } from "react";
 import styled from "styled-components";
 import { signOut } from "next-auth/react";
+import { Button, Typography } from "@mui/material";
 
 const NavBar = styled.nav`
   display: flex;
   width: 100vw;
   padding: 5px;
-  height: 7vh;
+  height: 6vh;
   background-color: #ffffff;
   border-bottom: 1px solid rgba(255, 199, 199, 0.7);
-  justify-content: flex-end;
+  justify-content: space-between;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1);
+
+  button {
+    margin-right: 20px;
+  }
+`;
+
+const Title = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
 `;
 
 const Footer = styled.footer`
@@ -29,22 +41,9 @@ const Main = styled.main`
   height: calc(100vh - 10vh - 20px);
 `;
 
-const Button = styled.button`
-  margin: 5px 25px;
-  display: flex;
-  padding: 5px;
-  color: rgb(253, 249, 243);
-  font-weight: 300;
-  text-transform: uppercase;
-  background: #219ebc;
-  border: none;
-  border-radius: 3px;
-  outline: 0;
-  cursor: pointer;
-`;
-
 export default function AuthWrapper({ children }: { children: ReactNode }) {
   const { status } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     if (status === "unauthenticated") Router.replace("/login");
@@ -54,7 +53,14 @@ export default function AuthWrapper({ children }: { children: ReactNode }) {
     return (
       <>
         <NavBar>
+          <Title>
+            <Typography onClick={() => router.push("/")} variant="h6">
+              Algorhythm
+            </Typography>
+          </Title>
           <Button
+            variant="text"
+            color="primary"
             onClick={() =>
               signOut({
                 callbackUrl: process.env.NEXT_PUBLIC_CALLBACK_URL,

@@ -13,6 +13,11 @@ export type ResponseBody = {
   data?: any;
 };
 
+export type ResponseBodyGeneric<T> = {
+  message: string;
+  data?: T;
+};
+
 export type Alert = {
   show: boolean;
   message: string;
