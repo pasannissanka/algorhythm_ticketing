@@ -8,7 +8,7 @@ const NavBar = styled.nav`
   display: flex;
   width: 100vw;
   padding: 5px;
-  height: 5vh;
+  height: 7vh;
   background-color: #ffffff;
   border-bottom: 1px solid rgba(255, 199, 199, 0.7);
   justify-content: flex-end;
@@ -29,6 +29,7 @@ const Main = styled.footer`
 `;
 
 const Button = styled.button`
+  margin: 5px 25px;
   display: flex;
   padding: 5px;
   color: rgb(253, 249, 243);
