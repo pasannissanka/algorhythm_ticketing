@@ -29,10 +29,17 @@ export default function Modal({ open, setOpen }: ModalProps) {
   };
 
   const [ticketType, setTicketType] = React.useState("");
+  const [ticketStatus, setTicketStatus] = React.useState("");
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setTicketType(event.target.value as string);
-    setFieldValue("ticketType", event.target.value as string);
+  const handleChange = (event: SelectChangeEvent, status: string) => {
+    if (status === "ticketType") {
+      setTicketType(event.target.value as string);
+      setFieldValue("ticketType", event.target.value as string);
+    }
+    if (status === "ticketStatus") {
+      setTicketStatus(event.target.value as string);
+      setFieldValue("ticketStatus", event.target.value as string);
+    }
   };
 
   const phoneRegExp = /^(?:7|0|(?:\+94))[0-9]{9,10}$/;
@@ -44,6 +51,7 @@ export default function Modal({ open, setOpen }: ModalProps) {
       .matches(phoneRegExp, "Phone number is not valid")
       .required(),
     ticketType: Yup.string().required(),
+    ticketStatus: Yup.string().required(),
   });
 
   const formik = useFormik({
@@ -64,6 +72,8 @@ export default function Modal({ open, setOpen }: ModalProps) {
       resetForm();
       setTicketType("");
       setFieldValue("ticketType", "");
+      setTicketStatus("");
+      setFieldValue("ticketStatus", "");
     },
   });
 
@@ -152,12 +162,31 @@ export default function Modal({ open, setOpen }: ModalProps) {
                       labelId="demo-simple-select-autowidth-label"
                       id="demo-simple-select-autowidth"
                       value={ticketType}
-                      onChange={handleChange}
+                      onChange={(e) => handleChange(e, "ticketType")}
                       autoWidth
                       label="Ticket Type"
                     >
-                      <MenuItem value={"Full-paid"}>Full-paid</MenuItem>
-                      <MenuItem value={"Half-paid"}>Half-paid</MenuItem>
+                      <MenuItem value={"undergraduate"}>Undergraduate</MenuItem>
+                      <MenuItem value={"alumni"}>Alumni</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={12}>
+                  {/* <Grid> Sort By</Grid>{" "} */}
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-autowidth-label">
+                      Ticket Status
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-autowidth-label"
+                      id="demo-simple-select-autowidth"
+                      value={ticketStatus}
+                      onChange={(e) => handleChange(e, "ticketStatus")}
+                      autoWidth
+                      label="Ticket Type"
+                    >
+                      <MenuItem value={"full-paid"}>Full-Paid</MenuItem>
+                      <MenuItem value={"half-paid"}>half-paid</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
