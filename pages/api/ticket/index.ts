@@ -1,18 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { connect } from "../../../utils/db";
-import { TicketReqBody } from "../../../utils/types";
+import { ResponseBody, TicketReqBody } from "../../../utils/types";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 
-type Data = {
-  message: string;
-  data?: any;
-};
-
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<ResponseBody>
 ) {
   const session = await unstable_getServerSession(req, res, authOptions);
 
@@ -21,13 +16,15 @@ export default async function handler(
       // handle ticket add
       try {
         const { Ticket } = await connect();
-        const { email, name, phone_number, type } = req.body as TicketReqBody;
+        const { email, name, phone_number, type, payment_status } =
+          req.body as TicketReqBody;
 
         const ticket = await Ticket.create({
           email,
           name,
           phone_number,
           type,
+          payment_status,
         });
         res.status(200).json({ message: "Success", data: ticket });
       } catch (error: any) {

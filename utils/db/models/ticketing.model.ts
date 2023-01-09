@@ -6,11 +6,11 @@ type Ticket = {
   email: string;
   phone_number: string;
   type: "UNDERGRADUATE" | "ALUMIN";
-
   // statuses
   paid: boolean;
   email_sent: boolean;
   status: "NOT_ATTENDED" | "ATTENDED";
+  payment_status: "FULL_PAID" | "HALF_PAID" | "NOT_PAID";
 } & Document;
 
 const TicketSchema = new Schema<Ticket>({
@@ -41,7 +41,14 @@ const TicketSchema = new Schema<Ticket>({
   status: {
     type: String,
     required: false,
-    default: "NOT_ATTENDED"
+    enum: ["ATTENDED", "NOT_ATTENDED"],
+    default: "NOT_ATTENDED",
+  },
+  payment_status: {
+    type: String,
+    required: true,
+    enum: ["FULL_PAID", "HALF_PAID", "NOT_PAID"],
+    default: "NOT_PAID",
   },
 });
 
