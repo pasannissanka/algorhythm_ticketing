@@ -2,6 +2,8 @@ import styled, { keyframes } from "styled-components";
 import { signIn } from "next-auth/react";
 import { FormEventHandler, useState } from "react";
 import Router from "next/router";
+import Image from "next/image";
+import logo from "../public/algo.png";
 
 const jump = keyframes`
   from{
@@ -68,13 +70,12 @@ const Button = styled.button`
   }
 `;
 
-const Header = styled.div`
+const ImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 2rem;
   font-size: 2rem;
-  color: #9c3587;
 `;
 
 const Error = styled.div`
@@ -127,7 +128,16 @@ export default function LoginPage() {
     <Wrapper>
       {" "}
       <Form onSubmit={handleSubmit}>
-        <Header>Login</Header>
+        <ImageWrapper>
+          <Image
+            src={logo}
+            alt="Picture of the author"
+            width={200}
+            height={200}
+            placeholder="blur"
+          />
+        </ImageWrapper>
+
         <Input
           type="email"
           name="email"
