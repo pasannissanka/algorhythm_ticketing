@@ -18,6 +18,8 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Alert as AL, TicketReqBody } from "../utils/types/index";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import UploadCsv from "./UploadCsv";
 
 const Container = styled.div`
   margin: 10px;
@@ -67,6 +69,12 @@ export default function BasicTable({
     message: "",
     severity: "success",
   });
+
+  const [openUpload, setOpenUpload] = React.useState(false);
+
+  const handleClickOpenUpload = () => {
+    setOpenUpload(true);
+  };
 
   const requestSearch = (searchedVal: string) => {
     const text = searchedVal.toLowerCase();
@@ -246,6 +254,14 @@ export default function BasicTable({
             <Button
               size="small"
               variant="contained"
+              color="info"
+              onClick={handleClickOpenUpload}
+            >
+              <CloudUploadIcon />
+            </Button>
+            <Button
+              size="small"
+              variant="contained"
               color="secondary"
               onClick={onClickAdd}
             >
@@ -382,6 +398,7 @@ export default function BasicTable({
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </TableWrapper>
+        <UploadCsv openUpload={openUpload} setOpenUpload={setOpenUpload} />
       </Container>
       {alert.show && (
         <Grid item md={12} style={{ margin: 10 }}>
