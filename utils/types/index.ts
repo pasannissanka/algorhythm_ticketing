@@ -6,6 +6,7 @@ export interface TicketReqBody {
   type: "UNDERGRADUATE" | "ALUMIN";
   payment_status: "FULL_PAID" | "HALF_PAID" | "NOT_PAID";
   status: "NOT_ATTENDED" | "ATTENDED";
+  email_sent: boolean;
 }
 
 export type ResponseBody = {
