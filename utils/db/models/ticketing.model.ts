@@ -1,5 +1,5 @@
 //IMPORT MONGOOSE
-import { Document, Schema } from "mongoose";
+import { Document, Schema, Types } from "mongoose";
 
 type Ticket = {
   name: string;
@@ -7,13 +7,14 @@ type Ticket = {
   phone_number: string;
   type: "UNDERGRADUATE" | "ALUMIN";
   // statuses
-  paid: boolean;
   email_sent: boolean;
   status: "NOT_ATTENDED" | "ATTENDED";
   payment_status: "FULL_PAID" | "HALF_PAID" | "NOT_PAID";
-} & Document;
+};
 
-const TicketSchema = new Schema<Ticket>({
+type TicketMongoDoc = Ticket & Document;
+
+const TicketSchema = new Schema<TicketMongoDoc>({
   name: {
     type: String,
     required: true,
@@ -29,10 +30,6 @@ const TicketSchema = new Schema<Ticket>({
   },
   type: {
     type: String,
-  },
-  paid: {
-    type: Boolean,
-    default: false,
   },
   email_sent: {
     type: Boolean,

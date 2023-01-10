@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { Ticket, TicketSchema } from "./models/ticketing.model";
+import { QRImage, QrImageSchema } from "./models/qr.model";
 
 const { DATABASE_URL } = process.env;
 
@@ -9,7 +10,10 @@ export const connect = async () => {
     .catch((err) => console.log(err));
   console.log("Mongoose Connection Established");
 
-  const Ticket: mongoose.Model<Ticket> = mongoose.models.Ticket || mongoose.model("Ticket", TicketSchema);
+  const Ticket: mongoose.Model<Ticket> =
+    mongoose.models.Ticket || mongoose.model("Ticket", TicketSchema);
+  const QR: mongoose.Model<QRImage> =
+    mongoose.models.QR || mongoose.model("QR", QrImageSchema);
 
-  return { conn, Ticket };
+  return { conn, Ticket, QR };
 };

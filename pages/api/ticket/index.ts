@@ -4,6 +4,8 @@ import { connect } from "../../../utils/db";
 import { ResponseBody, TicketReqBody } from "../../../utils/types";
 import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
+import QRCode from "qrcode";
+import { Stream } from "stream";
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,7 +17,7 @@ export default async function handler(
     if (req.method === "POST") {
       // handle ticket add
       try {
-        const { Ticket } = await connect();
+        const { Ticket, QR } = await connect();
         const { email, name, phone_number, type, payment_status } =
           req.body as TicketReqBody;
 
@@ -26,7 +28,36 @@ export default async function handler(
           type,
           payment_status,
         });
-        res.status(200).json({ message: "Success", data: ticket });
+
+        const id = ticket.id;
+
+        const _buf: any[] = [];
+        const writableStream = new Stream.Writable({
+          write: function (chunk, encoding, next) {
+            _buf.push(chunk);
+            next();
+          },
+        });
+
+        QRCode.toFileStream(writableStream, id, {
+          width: 640,
+          errorCorrectionLevel: "H",
+        });
+
+        writableStream.on("finish", async function () {
+          await QR.create({
+            contentType: "image/png",
+            data: Buffer.concat(_buf),
+            ticket_id: id,
+          });
+
+          res.status(200).json({ message: "Success", data: ticket });
+        });
+
+        writableStream.on("error", function (err) {
+          res.status(400).json({ message: "Error", data: err });
+        });
+
       } catch (error: any) {
         res.status(400).json({ message: "Error", data: error });
       }
