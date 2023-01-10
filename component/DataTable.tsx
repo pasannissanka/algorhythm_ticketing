@@ -18,23 +18,8 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Alert as AL, TicketReqBody } from "../utils/types/index";
-interface Details {
-  name: string;
-  email: string;
-  phone: string;
-  ticketType: string;
-  status: string;
-}
-
-function createData(
-  name: string,
-  email: string,
-  phone: string,
-  ticketType: string,
-  status: string
-) {
-  return { name, email, phone, ticketType, status };
-}
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import UploadCsv from "./UploadCsv";
 
 const Container = styled.div`
   margin: 10px;
@@ -84,6 +69,12 @@ export default function BasicTable({
     message: "",
     severity: "success",
   });
+
+  const [openUpload, setOpenUpload] = React.useState(false);
+
+  const handleClickOpenUpload = () => {
+    setOpenUpload(true);
+  };
 
   const requestSearch = (searchedVal: string) => {
     const text = searchedVal.toLowerCase();
@@ -242,10 +233,13 @@ export default function BasicTable({
       payment_status: row?.payment_status,
       _id: row?._id,
       status: row?.status,
+      email_sent: row?.email_sent,
     });
     setOpen(true);
     setOperation("edit");
   };
+  const sendEmailAll = () => {};
+  const sendEmail = (id: string) => {};
 
   return (
     <>
@@ -257,6 +251,14 @@ export default function BasicTable({
             onCancelSearch={() => cancelSearch()}
           />
           <ButtonWrapper>
+            <Button
+              size="small"
+              variant="contained"
+              color="info"
+              onClick={handleClickOpenUpload}
+            >
+              <CloudUploadIcon />
+            </Button>
             <Button
               size="small"
               variant="contained"
@@ -272,6 +274,14 @@ export default function BasicTable({
               onClick={() => router.push("/qr")}
             >
               QR
+            </Button>
+            <Button
+              size="small"
+              variant="contained"
+              color="warning"
+              onClick={() => sendEmailAll()}
+            >
+              Send All
             </Button>
           </ButtonWrapper>
         </SearchBarWrapper>
@@ -291,6 +301,7 @@ export default function BasicTable({
                   <TableCell align="right">Payment Status</TableCell>
                   <TableCell align="right">Attendance</TableCell>
                   <TableCell align="center">Settings</TableCell>
+                  <TableCell align="right">Email</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -350,7 +361,7 @@ export default function BasicTable({
                         ""
                       )}
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="center">
                       <Stack direction="row" spacing={1}>
                         <IconButton aria-label="edit">
                           <EditIcon onClick={() => Edit(row)} />
@@ -361,6 +372,16 @@ export default function BasicTable({
                           />
                         </IconButton>
                       </Stack>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Button
+                        variant="contained"
+                        size="small"
+                        disabled={row?.email_sent && true}
+                        onClick={() => sendEmail(row._id)}
+                      >
+                        {row?.email_sent ? "Sent" : "Send"}
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -377,6 +398,7 @@ export default function BasicTable({
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </TableWrapper>
+        <UploadCsv openUpload={openUpload} setOpenUpload={setOpenUpload} />
       </Container>
       {alert.show && (
         <Grid item md={12} style={{ margin: 10 }}>

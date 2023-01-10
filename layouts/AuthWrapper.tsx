@@ -4,6 +4,7 @@ import { ReactNode, useEffect } from "react";
 import styled from "styled-components";
 import { signOut } from "next-auth/react";
 import { Button, Typography } from "@mui/material";
+import Loading from "../component/LoadingScreen";
 
 const NavBar = styled.nav`
   display: flex;
@@ -41,6 +42,14 @@ const Main = styled.main`
   height: calc(100vh - 10vh - 20px);
 `;
 
+const SpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+`;
+
 export default function AuthWrapper({ children }: { children: ReactNode }) {
   const { status } = useSession();
   const router = useRouter();
@@ -76,5 +85,9 @@ export default function AuthWrapper({ children }: { children: ReactNode }) {
       </>
     );
 
-  return <div>loading</div>;
+  return (
+    <SpinnerWrapper>
+      <Loading />
+    </SpinnerWrapper>
+  );
 }
