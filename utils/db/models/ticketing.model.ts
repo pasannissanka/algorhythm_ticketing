@@ -2,6 +2,7 @@
 import { Document, Schema, Types } from "mongoose";
 
 type Ticket = {
+  _id: string;
   name: string;
   email: string;
   phone_number: string;
