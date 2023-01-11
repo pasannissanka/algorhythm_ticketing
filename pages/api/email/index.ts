@@ -6,6 +6,8 @@ import { sendEmail } from "../../../utils/email/send";
 import { ResponseBody } from "../../../utils/types";
 import { authOptions } from "../auth/[...nextauth]";
 
+const { VERCEL_URL, NEXT_PUBLIC_CALLBACK_URL } = process.env;
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseBody>
@@ -27,13 +29,16 @@ export default async function handler(
         });
 
         if (qr) {
-          const { email, name, id } = ticket;
+          const { email, name, id, phone_number } = ticket;
           const sib_email = await sendEmail({
             subject: "Test",
             to: [{ email, name }],
             params: {
-              bodyMessage: "Test",
-              qr_url: Buffer.from(qr.data).toString("base64"),
+              email,
+              name,
+              phone_number,
+              qr_url: `${VERCEL_URL || NEXT_PUBLIC_CALLBACK_URL}/api/qr/${id}`,
+              qr_data: Buffer.from(qr.data).toString("base64"),
             },
             attachment: [
               {
@@ -51,7 +56,7 @@ export default async function handler(
 
             await Ticket.updateOne({ _id: ticket.id }, updateTicket);
 
-            res.status(404).json({
+            res.status(200).json({
               message: "Success",
             });
           } else {
