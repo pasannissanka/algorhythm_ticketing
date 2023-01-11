@@ -1,11 +1,14 @@
+export type TicketType = "UNDERGRADUATE" | "ALUMNI" | "VIP";
+export type PaymentStatus = "FULL_PAID" | "HALF_PAID" | "NOT_PAID"
+export type AttendanceStatus = "NOT_ATTENDED" | "ATTENDED"
 export interface TicketReqBody {
   _id: string;
   name: string;
   email: string;
   phone_number: string;
-  type: "UNDERGRADUATE" | "ALUMIN";
-  payment_status: "FULL_PAID" | "HALF_PAID" | "NOT_PAID";
-  status: "NOT_ATTENDED" | "ATTENDED";
+  type: TicketType;
+  payment_status: PaymentStatus;
+  status: AttendanceStatus;
   email_sent: boolean;
 }
 

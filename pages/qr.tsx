@@ -196,8 +196,10 @@ const QRPage: NextPage = () => {
                       color="primary"
                       variant="outlined"
                     />
-                  ) : ticketData.type === "ALUMIN" ? (
-                    <Chip label="ALUMIN" color="secondary" variant="outlined" />
+                  ) : ticketData.type === "ALUMNI" ? (
+                    <Chip label="ALUMNI" color="secondary" variant="outlined" />
+                  ) : ticketData.type === "VIP" ? (
+                    <Chip label="VIP" color="warning" variant="outlined" />
                   ) : (
                     ""
                   )}

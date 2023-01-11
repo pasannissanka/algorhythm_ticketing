@@ -1,19 +1,22 @@
 //IMPORT MONGOOSE
-import { Document, Schema } from "mongoose";
+import { Document, Schema, Types } from "mongoose";
+import { AttendanceStatus, PaymentStatus, TicketType } from "../../types";
 
 type Ticket = {
+  _id: string;
   name: string;
   email: string;
   phone_number: string;
-  type: "UNDERGRADUATE" | "ALUMIN";
+  type: TicketType;
   // statuses
-  paid: boolean;
   email_sent: boolean;
-  status: "NOT_ATTENDED" | "ATTENDED";
-  payment_status: "FULL_PAID" | "HALF_PAID" | "NOT_PAID";
-} & Document;
+  status: AttendanceStatus;
+  payment_status: PaymentStatus;
+};
 
-const TicketSchema = new Schema<Ticket>({
+type TicketMongoDoc = Ticket & Document;
+
+const TicketSchema = new Schema<TicketMongoDoc>({
   name: {
     type: String,
     required: true,
@@ -29,10 +32,6 @@ const TicketSchema = new Schema<Ticket>({
   },
   type: {
     type: String,
-  },
-  paid: {
-    type: Boolean,
-    default: false,
   },
   email_sent: {
     type: Boolean,

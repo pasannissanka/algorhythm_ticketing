@@ -43,6 +43,11 @@ const TableWrapper = styled.div`
   /* margin: 10px; */
 `;
 
+const AttendWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 type TableProps = {
   callbackEnd: boolean;
   setInitialValues: (arg: TicketReqBody) => void;
@@ -64,6 +69,7 @@ export default function BasicTable({
   const [data, setData] = useState<TicketReqBody[]>([]);
   const [rows, setRows] = useState<TicketReqBody[]>(data);
   const [searched, setSearched] = useState<string>("");
+  const [count, setCount] = useState<number>(0);
   const [alert, setAlert] = React.useState<AL>({
     show: false,
     message: "",
@@ -137,8 +143,33 @@ export default function BasicTable({
     }
   };
 
+  const getCounts = async () => {
+    const results = await fetch("/api/ticket/attendance", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (results.status === 200) {
+      const { data } = await results.json();
+      console.log("data", data);
+
+      if (data) {
+        setCount(data);
+      }
+    } else {
+      setAlert({
+        show: true,
+        message: "Data loading failed!",
+        severity: "error",
+      });
+    }
+  };
+
   useEffect(() => {
     loadData();
+    getCounts();
   }, [callbackEnd]);
 
   const markAttendance = async (id: string, attendance: string) => {
@@ -154,6 +185,7 @@ export default function BasicTable({
 
     if (results.status === 200) {
       loadData();
+      getCounts();
       setAlert({
         show: true,
         message: "Marked Attendance Successfully!",
@@ -224,6 +256,10 @@ export default function BasicTable({
     }
   };
 
+  const handleBulkSuccess = () => {
+    loadData();
+  };
+
   const Edit = (row: TicketReqBody) => {
     setInitialValues({
       name: row?.name,
@@ -238,12 +274,30 @@ export default function BasicTable({
     setOpen(true);
     setOperation("edit");
   };
+
   const sendEmailAll = () => {};
-  const sendEmail = (id: string) => {};
+
+  const sendEmail = async (id: string) => {
+    const results = await fetch(`/api/email`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ticket_id: id,
+      }),
+    });
+
+    if (results.status === 200) {
+      loadData();
+    }
+  };
 
   return (
     <>
       <Container>
+        <AttendWrapper>Attendant Count : {count}</AttendWrapper>
+
         <SearchBarWrapper>
           <SearchBar
             value={searched}
@@ -279,6 +333,7 @@ export default function BasicTable({
               size="small"
               variant="contained"
               color="warning"
+              disabled={true}
               onClick={() => sendEmailAll()}
             >
               Send All
@@ -398,7 +453,11 @@ export default function BasicTable({
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </TableWrapper>
-        <UploadCsv openUpload={openUpload} setOpenUpload={setOpenUpload} />
+        <UploadCsv
+          openUpload={openUpload}
+          setOpenUpload={setOpenUpload}
+          onSuccess={handleBulkSuccess}
+        />
       </Container>
       {alert.show && (
         <Grid item md={12} style={{ margin: 10 }}>
