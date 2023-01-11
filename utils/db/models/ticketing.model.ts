@@ -1,16 +1,17 @@
 //IMPORT MONGOOSE
 import { Document, Schema, Types } from "mongoose";
+import { AttendanceStatus, PaymentStatus, TicketType } from "../../types";
 
 type Ticket = {
   _id: string;
   name: string;
   email: string;
   phone_number: string;
-  type: "UNDERGRADUATE" | "ALUMIN";
+  type: TicketType;
   // statuses
   email_sent: boolean;
-  status: "NOT_ATTENDED" | "ATTENDED";
-  payment_status: "FULL_PAID" | "HALF_PAID" | "NOT_PAID";
+  status: AttendanceStatus;
+  payment_status: PaymentStatus;
 };
 
 type TicketMongoDoc = Ticket & Document;

@@ -62,7 +62,9 @@ function Upload({ onError, onSuccess }: UploadProps) {
       onSuccess();
     } else if (results.status === 401) {
       const data = await results.json();
-      setFailedData(data.data.filter((d: { status: string; }) => d.status === "rejected"));
+      setFailedData(
+        data.data.filter((d: { status: string }) => d.status === "rejected")
+      );
     } else {
       onError(undefined);
     }

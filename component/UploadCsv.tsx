@@ -11,7 +11,11 @@ interface UploadProps {
   onSuccess: () => void;
 }
 
-export default function UploadCsv({ setOpenUpload, openUpload, onSuccess }: UploadProps) {
+export default function UploadCsv({
+  setOpenUpload,
+  openUpload,
+  onSuccess,
+}: UploadProps) {
   const [alert, setAlert] = React.useState<IAlert>({
     show: false,
     message: "",
@@ -23,7 +27,7 @@ export default function UploadCsv({ setOpenUpload, openUpload, onSuccess }: Uplo
   };
 
   const handleSuccess = () => {
-    onSuccess()
+    onSuccess();
     setOpenUpload(false);
     setAlert({
       show: true,

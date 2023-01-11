@@ -17,15 +17,15 @@ import { Field, Form, FormikProvider, useFormik } from "formik";
 import { TextField } from "formik-mui";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { Alert as AL } from "../utils/types/index";
+import { Alert as AL, PaymentStatus, TicketType } from "../utils/types/index";
 
 export interface TicketValues {
   _id?: string;
   name: string;
   email: string;
   phone_number: string;
-  type: "UNDERGRADUATE" | "ALUMIN" | "";
-  payment_status: "FULL_PAID" | "HALF_PAID" | "NOT_PAID";
+  type: TicketType;
+  payment_status: PaymentStatus;
 }
 
 type ModalProps = {
@@ -268,6 +268,7 @@ export default function Modal({
                     >
                       <MenuItem value={"UNDERGRADUATE"}>Undergraduate</MenuItem>
                       <MenuItem value={"ALUMIN"}>Alumin</MenuItem>
+                      <MenuItem value={"VIP"}>Vip</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
