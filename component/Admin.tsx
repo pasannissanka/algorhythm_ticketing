@@ -9,7 +9,7 @@ export default function Admin() {
   const [initialValues, setInitialValues] = useState<TicketValues>({
     name: "",
     email: "",
-    type: "",
+    type: "UNDERGRADUATE",
     phone_number: "",
     payment_status: "NOT_PAID",
   });
@@ -19,7 +19,7 @@ export default function Admin() {
     setInitialValues({
       name: "",
       email: "",
-      type: "",
+      type: "UNDERGRADUATE",
       phone_number: "",
       payment_status: "NOT_PAID",
     });
