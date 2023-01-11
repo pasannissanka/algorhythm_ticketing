@@ -58,6 +58,9 @@ export default async function handler(
 
             res.status(200).json({
               message: "Success",
+              data: {
+                sib_message_ids: sib_email.body,
+              },
             });
           } else {
             res.status(400).json({
