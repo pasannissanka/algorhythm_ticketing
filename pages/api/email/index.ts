@@ -33,12 +33,12 @@ export default async function handler(
             to: [{ email, name }],
             params: {
               bodyMessage: "Test",
-              qr_url: new Buffer(qr?.data).toString("base64"),
+              qr_url: Buffer.from(qr.data).toString("base64"),
             },
             attachment: [
               {
                 name: "QR code.png",
-                content: new Buffer(qr?.data).toString("base64"),
+                content: Buffer.from(qr.data).toString("base64"),
               },
             ],
           });

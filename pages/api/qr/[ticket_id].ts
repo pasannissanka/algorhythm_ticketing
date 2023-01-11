@@ -15,7 +15,7 @@ export default async function handler(
   });
 
   if (qr) {
-    const imgData = new Buffer(qr?.data).toString("base64");
+    const imgData = Buffer.from(qr.data).toString("base64");
     res.writeHead(200, [["Content-Type", "image/png"]]);
     res.end(Buffer.from(imgData, "base64"));
   } else {

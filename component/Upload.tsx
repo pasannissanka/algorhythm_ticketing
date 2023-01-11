@@ -1,31 +1,71 @@
-import React, { useState } from "react";
+import { Button, Typography } from "@mui/material";
 import Papa from "papaparse";
-import CsvReadableStream from "csv-reader";
+import { useState } from "react";
+import styled from "styled-components";
+import { TicketReqBody } from "../utils/types";
 
-function Upload() {
-  const [file, setFile] = useState(null);
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
 
+const Text = styled(Typography)``;
+const UploadWrapper = styled.div`
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 20px;
+  border: 1px solid black;
+`;
+
+const ErrorWrapper = styled.pre`
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  width: 100%;
+  overflow: scroll;
+  padding: 10px;
+`;
+
+type UploadProps = {
+  onSuccess: () => void;
+  onError: (error: any) => void;
+};
+
+function Upload({ onError, onSuccess }: UploadProps) {
   const [parsedData, setParsedData] = useState([]);
   const [data, setData] = useState([]);
+  const [failedData, setFailedData] = useState<{
+    reason: {
+      error: any;
+      item: TicketReqBody;
+    };
+    status: "rejected" | "fulfilled";
+  }>();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log("data", data);
-    //if await is removed, console log will be called before the uploadFile() is executed completely.
-    //since the await is added, this will pause here then console log will be called
-    let res = await uploadFile(file);
-    //  console.log(res.data);
+    await uploadFile(data);
   };
 
-  const uploadFile = async (file: any) => {
-    const formData = new FormData();
-    formData.append("avatar", file);
+  const uploadFile = async (data: any) => {
+    const results = await fetch(`/api/ticket/bulk`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
-    // return await axios.post(UPLOAD_ENDPOINT, formData, {
-    //   headers: {
-    //     "content-type": "multipart/form-data"
-    //   }
-    // });
+    if (results.status === 200) {
+      onSuccess();
+    } else if (results.status === 401) {
+      const data = await results.json();
+      setFailedData(data.data.filter((d: { status: string; }) => d.status === "rejected"));
+    } else {
+      onError(undefined);
+    }
   };
 
   const handleOnChange = (e: any) => {
@@ -54,9 +94,25 @@ function Upload() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1>React File Upload</h1>
-      <input type="file" onChange={handleOnChange} />
-      <button type="submit">Upload File</button>
+      <Wrapper>
+        {/* <Title variant="h6">Create tickets</Title> */}
+        <Text variant="subtitle1">Upload CSV file</Text>
+        <Text variant="subtitle2">
+          name,email,phone_number,type,payment_status
+        </Text>
+        {failedData && (
+          <>
+            <Text color="red">Following data not added: Error occurred</Text>
+            <ErrorWrapper>{JSON.stringify(failedData, null, 2)}</ErrorWrapper>
+          </>
+        )}
+        <UploadWrapper>
+          <input type="file" onChange={handleOnChange} />
+        </UploadWrapper>
+        <Button variant="contained" fullWidth type="submit">
+          Upload File
+        </Button>
+      </Wrapper>
     </form>
   );
 }

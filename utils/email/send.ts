@@ -11,6 +11,7 @@ type sendEmailParams = {
     bodyMessage: string;
     qr_url: string;
   };
+  messageVersions?: SibApiV3Sdk.SendSmtpEmailMessageVersions[];
 };
 
 export const sendEmail = async ({
@@ -19,6 +20,7 @@ export const sendEmail = async ({
   templateId,
   to,
   params,
+  messageVersions,
 }: sendEmailParams) => {
   const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
   apiInstance.setApiKey(
@@ -28,7 +30,7 @@ export const sendEmail = async ({
 
   return apiInstance.sendTransacEmail({
     attachment,
-    sender: {name: "Test",email: "pasannissanka@gmail.com"},
+    sender: { name: "Test", email: "pasannissanka@gmail.com" },
     to,
     subject,
     params,
@@ -36,5 +38,6 @@ export const sendEmail = async ({
     <html><body><h1>This is a transactional email {{params.bodyMessage}}</h1> <img src="data:image/png;base64,${params.qr_url}" alt="QR Code" width="100" height="100">
     </body></html>
     `,
+    messageVersions,
   });
 };
