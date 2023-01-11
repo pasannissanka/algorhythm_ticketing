@@ -256,6 +256,10 @@ export default function BasicTable({
     }
   };
 
+  const handleBulkSuccess = () => {
+    loadData();
+  };
+
   const Edit = (row: TicketReqBody) => {
     setInitialValues({
       name: row?.name,
@@ -432,7 +436,11 @@ export default function BasicTable({
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </TableWrapper>
-        <UploadCsv openUpload={openUpload} setOpenUpload={setOpenUpload} />
+        <UploadCsv
+          openUpload={openUpload}
+          setOpenUpload={setOpenUpload}
+          onSuccess={handleBulkSuccess}
+        />
       </Container>
       {alert.show && (
         <Grid item md={12} style={{ margin: 10 }}>
