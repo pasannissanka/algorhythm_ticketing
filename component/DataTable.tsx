@@ -242,8 +242,24 @@ export default function BasicTable({
     setOpen(true);
     setOperation("edit");
   };
+
   const sendEmailAll = () => {};
-  const sendEmail = (id: string) => {};
+
+  const sendEmail = async (id: string) => {
+    const results = await fetch(`/api/email`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ticket_id: id,
+      }),
+    });
+
+    if (results.status === 200) {
+      loadData();
+    }
+  };
 
   return (
     <>
@@ -283,6 +299,7 @@ export default function BasicTable({
               size="small"
               variant="contained"
               color="warning"
+              disabled={true}
               onClick={() => sendEmailAll()}
             >
               Send All

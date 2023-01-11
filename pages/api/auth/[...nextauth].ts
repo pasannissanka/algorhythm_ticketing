@@ -17,8 +17,8 @@ export const authOptions: NextAuthOptions = {
         // perform you login logic
         // find out user from db
         if (
-          email !== process.env.NEXT_PUBLIC_EMAIL ||
-          password !== process.env.NEXT_PUBLIC_PASSWORD
+          email !== process.env.EMAIL ||
+          password !== process.env.PASSWORD
         ) {
           throw new Error("invalid credentials");
         }
@@ -28,7 +28,7 @@ export const authOptions: NextAuthOptions = {
         return {
           id: "1234",
           name: "Admin",
-          email: process.env.NEXT_PUBLIC_EMAIL,
+          email: process.env.EMAIL,
           role: "admin",
         };
       },
