@@ -54,7 +54,7 @@ function Upload() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1>React File Upload</h1>
+      <h1>File Upload</h1>
       <input type="file" onChange={handleOnChange} />
       <button type="submit">Upload File</button>
     </form>

@@ -24,7 +24,7 @@ export interface TicketValues {
   name: string;
   email: string;
   phone_number: string;
-  type: "UNDERGRADUATE" | "ALUMIN" | "";
+  type: "UNDERGRADUATE" | "ALUMNI" | "VIP";
   payment_status: "FULL_PAID" | "HALF_PAID" | "NOT_PAID";
 }
 
@@ -268,6 +268,7 @@ export default function Modal({
                     >
                       <MenuItem value={"UNDERGRADUATE"}>Undergraduate</MenuItem>
                       <MenuItem value={"ALUMIN"}>Alumin</MenuItem>
+                      <MenuItem value={"VIP"}>Vip</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>

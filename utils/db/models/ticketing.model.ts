@@ -6,7 +6,7 @@ type Ticket = {
   name: string;
   email: string;
   phone_number: string;
-  type: "UNDERGRADUATE" | "ALUMIN";
+  type: "UNDERGRADUATE" | "ALUMNI" | "VIP";
   // statuses
   email_sent: boolean;
   status: "NOT_ATTENDED" | "ATTENDED";
