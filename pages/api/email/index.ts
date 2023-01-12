@@ -29,15 +29,16 @@ export default async function handler(
         });
 
         if (qr) {
-          const { email, name, id, phone_number } = ticket;
+          const { email, name, id, phone_number, type } = ticket;
           const sib_email = await sendEmail({
-            subject: "Test",
+            subject: "Your e-ticket for the Alogrhythm 2022",
             to: [{ email, name }],
             params: {
+              type,
               email,
               name,
               phone_number,
-              qr_url: `${VERCEL_URL || NEXT_PUBLIC_CALLBACK_URL}/api/qr/${id}`,
+              qr_url: qr.image_url,
               qr_data: Buffer.from(qr.data).toString("base64"),
             },
             attachment: [

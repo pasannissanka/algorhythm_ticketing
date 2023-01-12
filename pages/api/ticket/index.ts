@@ -6,6 +6,12 @@ import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 import QRCode from "qrcode";
 import { Stream } from "stream";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../../utils/firebaseConfig";
+
+const metadata = {
+  contentType: "image/png",
+};
 
 export default async function handler(
   req: NextApiRequest,
@@ -45,10 +51,23 @@ export default async function handler(
         });
 
         writableStream.on("finish", async function () {
+          const storageRef = ref(storage, `image/${id}.png`);
+
+          const snapshot = await uploadBytes(
+            storageRef,
+            Buffer.concat(_buf),
+            metadata
+          );
+
+          const url = await getDownloadURL(snapshot.ref);
+
+          console.log("****", url);
+
           await QR.create({
             contentType: "image/png",
             data: Buffer.concat(_buf),
             ticket_id: id,
+            image_url: url,
           });
 
           res.status(200).json({ message: "Success", data: ticket });
@@ -57,7 +76,6 @@ export default async function handler(
         writableStream.on("error", function (err) {
           res.status(400).json({ message: "Error", data: err });
         });
-
       } catch (error: any) {
         res.status(400).json({ message: "Error", data: error });
       }

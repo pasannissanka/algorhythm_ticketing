@@ -9,6 +9,7 @@ export type sendEmailParams = {
   attachment?: SibApiV3Sdk.SendSmtpEmailAttachment[];
   templateId?: number;
   params?: {
+    type: string;
     name: string;
     email: string;
     phone_number: string;
@@ -34,7 +35,7 @@ export const sendEmail = async ({
 
   return apiInstance.sendTransacEmail({
     attachment,
-    sender: { name: "Test", email: "pasannissanka@gmail.com" },
+    sender: { name: "Society of Computer Science", email: "scs@sci.sjp.ac.lk" },
     to,
     subject,
     params,
