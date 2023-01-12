@@ -79,11 +79,7 @@ export default function Modal({
       .matches(emailRegex, "Email is not valid")
       .max(30, "Max length for the name is 30.")
       .required("Email is required"),
-    phone_number: Yup.string()
-      .matches(phone_numberRegExp, "Phone number is not valid")
-      .required("Phone number is required"),
     type: Yup.string().required(),
-    payment_status: Yup.string().required(),
   });
 
   const formik = useFormik({
@@ -249,7 +245,6 @@ export default function Modal({
                     variant="outlined"
                     fullWidth
                     component={TextField}
-                    required
                   />
                 </Grid>
                 <Grid item xs={12} md={12}>
@@ -267,7 +262,7 @@ export default function Modal({
                       label="Ticket Type"
                     >
                       <MenuItem value={"UNDERGRADUATE"}>Undergraduate</MenuItem>
-                      <MenuItem value={"ALUMIN"}>Alumin</MenuItem>
+                      <MenuItem value={"ALUMNI"}>Alumin</MenuItem>
                       <MenuItem value={"VIP"}>Vip</MenuItem>
                     </Select>
                   </FormControl>

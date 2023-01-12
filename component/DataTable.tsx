@@ -375,7 +375,7 @@ export default function BasicTable({
                       {row.name}
                     </TableCell>
                     <TableCell align="right">{row.email}</TableCell>
-                    <TableCell align="right">{row.phone_number}</TableCell>
+                    <TableCell align="right">{row?.phone_number}</TableCell>
                     <TableCell align="right">{row.type}</TableCell>
 
                     <TableCell align="right">
