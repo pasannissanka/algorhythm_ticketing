@@ -6,8 +6,12 @@ import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 import QRCode from "qrcode";
 import { Stream } from "stream";
-import uploadImageAsPromise from "../../../services/firebase";
-import qrImage from "../../../utils/qr.png";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../../utils/firebaseConfig";
+
+const metadata = {
+  contentType: "image/png",
+};
 
 export default async function handler(
   req: NextApiRequest,
@@ -41,34 +45,29 @@ export default async function handler(
           },
         });
 
-        // QRCode.toFileStream(writableStream, id, {
-        //   width: 640,
-        //   errorCorrectionLevel: "H",
-        // });
-
-        const im = QRCode.toFile(
-          "utils/qr.png",
-          id,
-          {
-            color: {
-              dark: "#FFFF", // Blue dots
-              light: "#0000", // Transparent background
-            },
-          },
-          function (err) {
-            if (err) throw err;
-            console.log("done");
-          }
-        );
-
-        console.log(im);
+        QRCode.toFileStream(writableStream, id, {
+          width: 640,
+          errorCorrectionLevel: "H",
+        });
 
         writableStream.on("finish", async function () {
-          await uploadImageAsPromise(qrImage);
+          const storageRef = ref(storage, `image/${id}.png`);
+
+          const snapshot = await uploadBytes(
+            storageRef,
+            Buffer.concat(_buf),
+            metadata
+          );
+
+          const url = await getDownloadURL(snapshot.ref);
+
+          console.log("****", url);
+
           await QR.create({
             contentType: "image/png",
             data: Buffer.concat(_buf),
             ticket_id: id,
+            image_url: url,
           });
 
           res.status(200).json({ message: "Success", data: ticket });

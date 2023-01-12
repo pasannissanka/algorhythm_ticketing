@@ -4,6 +4,7 @@ type QRImage = {
   data: Buffer;
   contentType?: string;
   ticket_id: any;
+  image_url: string;
 };
 
 type QRImageMongoDoc = QRImage & Document;
@@ -20,6 +21,9 @@ const QrImageSchema = new Schema<QRImageMongoDoc>({
     type: Types.ObjectId,
     required: true,
     ref: "Ticket",
+  },
+  image_url: {
+    type: String,
   },
 });
 

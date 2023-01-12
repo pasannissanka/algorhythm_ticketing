@@ -37,7 +37,7 @@ export default async function handler(
               email,
               name,
               phone_number,
-              qr_url: `${VERCEL_URL || NEXT_PUBLIC_CALLBACK_URL}/api/qr/${id}`,
+              qr_url: qr.image_url,
               qr_data: Buffer.from(qr.data).toString("base64"),
             },
             attachment: [
