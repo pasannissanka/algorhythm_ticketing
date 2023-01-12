@@ -666,8 +666,7 @@ export const htmlContent = `
                                                       "
                                                     >
                                                       <img
-                                                        src="data:image/png;base64,{{params.qr_data}}"
-                                                        onerror="this.onerror=null;this.src='https://img.mailinblue.com/5543527/images/content_library/original/63c04e257cb7140fe04d366b.jpg';"
+                                                        src="{{params.qr_url}}"
                                                         alt="QR Code"
                                                         width="264"
                                                         border="0"
