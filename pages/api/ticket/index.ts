@@ -6,6 +6,8 @@ import { unstable_getServerSession } from "next-auth/next";
 import { authOptions } from "../auth/[...nextauth]";
 import QRCode from "qrcode";
 import { Stream } from "stream";
+import uploadImageAsPromise from "../../../services/firebase";
+import qrImage from "../../../utils/qr.png";
 
 export default async function handler(
   req: NextApiRequest,
@@ -39,12 +41,30 @@ export default async function handler(
           },
         });
 
-        QRCode.toFileStream(writableStream, id, {
-          width: 640,
-          errorCorrectionLevel: "H",
-        });
+        // QRCode.toFileStream(writableStream, id, {
+        //   width: 640,
+        //   errorCorrectionLevel: "H",
+        // });
+
+        const im = QRCode.toFile(
+          "utils/qr.png",
+          id,
+          {
+            color: {
+              dark: "#FFFF", // Blue dots
+              light: "#0000", // Transparent background
+            },
+          },
+          function (err) {
+            if (err) throw err;
+            console.log("done");
+          }
+        );
+
+        console.log(im);
 
         writableStream.on("finish", async function () {
+          await uploadImageAsPromise(qrImage);
           await QR.create({
             contentType: "image/png",
             data: Buffer.concat(_buf),
@@ -57,7 +77,6 @@ export default async function handler(
         writableStream.on("error", function (err) {
           res.status(400).json({ message: "Error", data: err });
         });
-
       } catch (error: any) {
         res.status(400).json({ message: "Error", data: error });
       }
