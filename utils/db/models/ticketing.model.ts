@@ -28,10 +28,12 @@ const TicketSchema = new Schema<TicketMongoDoc>({
   },
   phone_number: {
     type: String,
-    required: true,
+    required: false,
   },
   type: {
     type: String,
+    enum: ["UNDERGRADUATE", "ALUMNI", "VIP"],
+    required: true,
   },
   email_sent: {
     type: Boolean,
@@ -45,7 +47,7 @@ const TicketSchema = new Schema<TicketMongoDoc>({
   },
   payment_status: {
     type: String,
-    required: true,
+    required: false,
     enum: ["FULL_PAID", "HALF_PAID", "NOT_PAID"],
     default: "NOT_PAID",
   },
