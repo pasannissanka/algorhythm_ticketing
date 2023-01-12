@@ -73,14 +73,14 @@ export const htmlContent = `
     <style type="text/css" emogrify="no">
       @media (max-width: 600px) {
         .gmx-killpill {
-          content: " 03D1";
+          content: " 3D1";
         }
       }
     </style>
     <style type="text/css" emogrify="no">
       @media (max-width: 600px) {
         .gmx-killpill {
-          content: " 03D1";
+          content: " 3D1";
         }
         .r0-c {
           box-sizing: border-box !important;
@@ -125,22 +125,24 @@ export const htmlContent = `
           padding-left: 0px !important;
           padding-right: 0px !important;
         }
-        .r8-o {
+        .r8-i {
+          padding-bottom: 0px !important;
+          padding-left: 0px !important;
+          padding-right: 0px !important;
+          padding-top: 0px !important;
+        }
+        .r9-o {
           background-size: auto !important;
           border-style: solid !important;
           margin: 0 auto 0 auto !important;
           width: 100% !important;
         }
-        .r9-i {
+        .r10-i {
           background-color: #ffffff !important;
           padding-bottom: 20px !important;
           padding-left: 10px !important;
           padding-right: 10px !important;
           padding-top: 20px !important;
-        }
-        .r10-i {
-          padding-bottom: 15px !important;
-          padding-top: 15px !important;
         }
         .r11-c {
           box-sizing: border-box !important;
@@ -149,7 +151,6 @@ export const htmlContent = `
           width: 100% !important;
         }
         .r12-o {
-          background-size: auto !important;
           border-style: solid !important;
           margin: 0 auto 0 0 !important;
           width: 100% !important;
@@ -159,29 +160,34 @@ export const htmlContent = `
           text-align: left !important;
         }
         .r14-i {
+          padding-bottom: 15px !important;
+          padding-top: 15px !important;
+        }
+        .r15-o {
+          background-size: auto !important;
+          border-style: solid !important;
+          margin: 0 auto 0 0 !important;
+          width: 100% !important;
+        }
+        .r16-i {
           background-color: #eff2f7 !important;
           padding-bottom: 20px !important;
           padding-left: 15px !important;
           padding-right: 15px !important;
           padding-top: 20px !important;
         }
-        .r15-o {
-          border-style: solid !important;
-          margin: 0 auto 0 0 !important;
-          width: 100% !important;
-        }
-        .r16-i {
+        .r17-i {
           color: #3b3f44 !important;
           padding-bottom: 0px !important;
           padding-top: 15px !important;
           text-align: center !important;
         }
-        .r17-c {
+        .r18-c {
           box-sizing: border-box !important;
           text-align: center !important;
           width: 100% !important;
         }
-        .r18-i {
+        .r19-i {
           padding-bottom: 15px !important;
           padding-left: 0px !important;
           padding-right: 0px !important;
@@ -401,24 +407,26 @@ export const htmlContent = `
                                                 cellpadding="0"
                                                 border="0"
                                                 role="presentation"
-                                                width="197"
+                                                width="570"
                                                 class="r3-o"
                                                 style="
                                                   table-layout: fixed;
-                                                  width: 197px;
+                                                  width: 570px;
                                                 "
                                               >
                                                 <tr>
                                                   <td
-                                                    class=""
+                                                    class="r8-i"
                                                     style="
                                                       font-size: 0px;
                                                       line-height: 0px;
+                                                      padding-bottom: 15px;
+                                                      padding-top: 15px;
                                                     "
                                                   >
                                                     <img
-                                                      src="https://img.mailinblue.com/5543527/images/content_library/original/63be288e16036f1730747e8a.png"
-                                                      width="197"
+                                                      src="https://img.mailinblue.com/5543527/images/content_library/original/63be7d2694d3e3777d4e2349."
+                                                      width="570"
                                                       border="0"
                                                       class=""
                                                       style="
@@ -451,13 +459,13 @@ export const htmlContent = `
                         border="0"
                         role="presentation"
                         width="100%"
-                        class="r8-o"
+                        class="r9-o"
                         style="table-layout: fixed; width: 100%"
                       >
                         <!-- -->
                         <tr>
                           <td
-                            class="r9-i"
+                            class="r10-i"
                             style="
                               background-color: #ffffff;
                               padding-bottom: 20px;
@@ -498,6 +506,134 @@ export const htmlContent = `
                                           role="presentation"
                                         >
                                           <tr>
+                                            <td class="r11-c" align="left">
+                                              <table
+                                                cellspacing="0"
+                                                cellpadding="0"
+                                                border="0"
+                                                role="presentation"
+                                                width="100%"
+                                                class="r12-o"
+                                                style="
+                                                  table-layout: fixed;
+                                                  width: 100%;
+                                                "
+                                              >
+                                                <tr>
+                                                  <td
+                                                    align="left"
+                                                    valign="top"
+                                                    class="r13-i nl2go-default-textstyle"
+                                                    style="
+                                                      color: #3b3f44;
+                                                      font-family: arial,
+                                                        helvetica, sans-serif;
+                                                      font-size: 16px;
+                                                      line-height: 1.5;
+                                                      padding-top: 15px;
+                                                      text-align: left;
+                                                    "
+                                                  >
+                                                    <div>
+                                                      <h3
+                                                        class="default-heading3"
+                                                        style="
+                                                          margin: 0;
+                                                          color: #1f2d3d;
+                                                          font-family: arial,
+                                                            helvetica,
+                                                            sans-serif;
+                                                          font-size: 24px;
+                                                        "
+                                                      >
+                                                        <span
+                                                          style="
+                                                            background-color: #ffffff;
+                                                            color: #858588;
+                                                          "
+                                                          >Your e-ticket is here
+                                                          - Algorhythm
+                                                          2022</span
+                                                        >
+                                                      </h3>
+                                                    </div>
+                                                  </td>
+                                                </tr>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td class="r11-c" align="left">
+                                              <table
+                                                cellspacing="0"
+                                                cellpadding="0"
+                                                border="0"
+                                                role="presentation"
+                                                width="100%"
+                                                class="r12-o"
+                                                style="
+                                                  table-layout: fixed;
+                                                  width: 100%;
+                                                "
+                                              >
+                                                <tr>
+                                                  <td
+                                                    align="left"
+                                                    valign="top"
+                                                    class="r13-i nl2go-default-textstyle"
+                                                    style="
+                                                      color: #3b3f44;
+                                                      font-family: arial,
+                                                        helvetica, sans-serif;
+                                                      font-size: 16px;
+                                                      line-height: 1.5;
+                                                      padding-top: 15px;
+                                                      text-align: left;
+                                                      word-wrap: break-word;
+                                                    "
+                                                  >
+                                                    <div>
+                                                      <p style="margin: 0"> </p>
+                                                      <p style="margin: 0">
+                                                        Hi {{params.name}},
+                                                      </p>
+                                                      <p style="margin: 0"> </p>
+                                                      <p style="margin: 0">
+                                                        Here's your official
+                                                        confirmation to attend
+                                                        the “Algorhythm”
+                                                        <strong
+                                                          >(14th January)  at
+                                                          Summerfeilds,
+                                                          Kottawa</strong
+                                                        >.(<a
+                                                          href="https://goo.gl/maps/ZoPYLJnb541sWFWq8"
+                                                          title="Location"
+                                                          target="_blank"
+                                                          style="
+                                                            color: #0092ff;
+                                                            text-decoration: underline;
+                                                          "
+                                                          >https://goo.gl/maps/ZoPYLJnb541sWFWq8</a
+                                                        >)
+                                                      </p>
+                                                      <p style="margin: 0"> </p>
+                                                      <p style="margin: 0">
+                                                        Please present the
+                                                        following QR code at the
+                                                        premises (If the QR code
+                                                        below is not visible,
+                                                        use the image in the
+                                                        attachment instead).
+                                                      </p>
+                                                      <p style="margin: 0"> </p>
+                                                    </div>
+                                                  </td>
+                                                </tr>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                          <tr>
                                             <td class="r2-c" align="center">
                                               <table
                                                 cellspacing="0"
@@ -505,7 +641,7 @@ export const htmlContent = `
                                                 border="0"
                                                 role="presentation"
                                                 width="264"
-                                                class="r8-o"
+                                                class="r9-o"
                                                 style="
                                                   table-layout: fixed;
                                                   width: 264px;
@@ -513,7 +649,7 @@ export const htmlContent = `
                                               >
                                                 <tr>
                                                   <td
-                                                    class="r10-i"
+                                                    class="r14-i"
                                                     style="
                                                       font-size: 0px;
                                                       line-height: 0px;
@@ -531,6 +667,7 @@ export const htmlContent = `
                                                     >
                                                       <img
                                                         src="data:image/png;base64,{{params.qr_data}}"
+                                                        onerror="this.onerror=null;this.src='https://img.mailinblue.com/5543527/images/content_library/original/63c04e257cb7140fe04d366b.jpg';"
                                                         alt="QR Code"
                                                         width="264"
                                                         border="0"
@@ -540,6 +677,62 @@ export const htmlContent = `
                                                           width: 100%;
                                                         "
                                                     /></a>
+                                                  </td>
+                                                </tr>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td class="r11-c" align="left">
+                                              <table
+                                                cellspacing="0"
+                                                cellpadding="0"
+                                                border="0"
+                                                role="presentation"
+                                                width="100%"
+                                                class="r15-o"
+                                                style="
+                                                  table-layout: fixed;
+                                                  width: 100%;
+                                                "
+                                              >
+                                                <tr>
+                                                  <td
+                                                    align="left"
+                                                    valign="top"
+                                                    class="r13-i nl2go-default-textstyle"
+                                                    style="
+                                                      color: #3b3f44;
+                                                      font-family: arial,
+                                                        helvetica, sans-serif;
+                                                      font-size: 16px;
+                                                      line-height: 1.5;
+                                                      padding-top: 15px;
+                                                      text-align: left;
+                                                    "
+                                                  >
+                                                    <div>
+                                                      <p
+                                                        style="
+                                                          margin: 0;
+                                                          margin-left: 40px;
+                                                        "
+                                                      >
+                                                         
+                                                      </p>
+                                                      <p style="margin: 0">
+                                                        Name : {{params.name}}
+                                                      </p>
+                                                      <p style="margin: 0">
+                                                        Email
+                                                         : {{params.email}}
+                                                      </p>
+                                                      <p style="margin: 0">
+                                                        Reservation
+                                                        : {{params.type}}
+                                                      </p>
+                                                      <p style="margin: 0"> </p>
+                                                    </div>
                                                   </td>
                                                 </tr>
                                               </table>
@@ -575,43 +768,65 @@ export const htmlContent = `
                                                     "
                                                   >
                                                     <div>
-                                                      <p
-                                                        style="
-                                                          margin: 0;
-                                                          margin-left: 40px;
-                                                        "
-                                                      >
-                                                         
-                                                      </p>
-                                                      <h4
-                                                        class="default-heading4"
-                                                        style="
-                                                          margin: 0;
-                                                          color: #1f2d3d;
-                                                          font-family: arial,
-                                                            helvetica,
-                                                            sans-serif;
-                                                          font-size: 18px;
-                                                        "
-                                                      >
-                                                        Saturday, January 14 at
-                                                        6:30 p.m. at
-                                                        Summerfeilds, Kottawa
-                                                      </h4>
-                                                      <p style="margin: 0"> </p>
-                                                      <p style="margin: 0"> </p>
                                                       <p style="margin: 0">
-                                                        Name : {{params.name}}
+                                                        See you at Algorhythm
+                                                        2022!
                                                       </p>
+                                                    </div>
+                                                  </td>
+                                                </tr>
+                                              </table>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td class="r11-c" align="left">
+                                              <table
+                                                cellspacing="0"
+                                                cellpadding="0"
+                                                border="0"
+                                                role="presentation"
+                                                width="100%"
+                                                class="r12-o"
+                                                style="
+                                                  table-layout: fixed;
+                                                  width: 100%;
+                                                "
+                                              >
+                                                <tr>
+                                                  <td
+                                                    align="left"
+                                                    valign="top"
+                                                    class="r13-i nl2go-default-textstyle"
+                                                    style="
+                                                      color: #3b3f44;
+                                                      font-family: arial,
+                                                        helvetica, sans-serif;
+                                                      font-size: 16px;
+                                                      line-height: 1.5;
+                                                      padding-top: 15px;
+                                                      text-align: left;
+                                                    "
+                                                  >
+                                                    <div>
                                                       <p style="margin: 0">
-                                                        Email  :
-                                                        {{params.email}}
+                                                        <span
+                                                          style="
+                                                            font-size: 12px;
+                                                          "
+                                                          >CONFIDENTIALITY
+                                                          NOTICE: The contents
+                                                          of this email message
+                                                          and any attachments
+                                                          are intended solely
+                                                          for the addressee(s)
+                                                          and may contain
+                                                          confidential and/or
+                                                          privileged information
+                                                          and may be legally
+                                                          protected
+                                                          frodisclosure.</span
+                                                        >
                                                       </p>
-                                                      <p style="margin: 0">
-                                                        Phone :
-                                                        {{params.phone_number}}
-                                                      </p>
-                                                      <p style="margin: 0"> </p>
                                                     </div>
                                                   </td>
                                                 </tr>
@@ -644,7 +859,7 @@ export const htmlContent = `
                         <!-- -->
                         <tr>
                           <td
-                            class="r14-i"
+                            class="r16-i"
                             style="
                               background-color: #eff2f7;
                               padding-bottom: 20px;
@@ -699,7 +914,7 @@ export const htmlContent = `
                                                 border="0"
                                                 role="presentation"
                                                 width="100%"
-                                                class="r15-o"
+                                                class="r12-o"
                                                 style="
                                                   table-layout: fixed;
                                                   width: 100%;
@@ -709,7 +924,7 @@ export const htmlContent = `
                                                   <td
                                                     align="center"
                                                     valign="top"
-                                                    class="r16-i nl2go-default-textstyle"
+                                                    class="r17-i nl2go-default-textstyle"
                                                     style="
                                                       font-family: arial,
                                                         helvetica, sans-serif;
@@ -743,7 +958,7 @@ export const htmlContent = `
                                                 border="0"
                                                 role="presentation"
                                                 width="100%"
-                                                class="r15-o"
+                                                class="r12-o"
                                                 style="
                                                   table-layout: fixed;
                                                   width: 100%;
@@ -753,7 +968,7 @@ export const htmlContent = `
                                                   <td
                                                     align="center"
                                                     valign="top"
-                                                    class="r16-i nl2go-default-textstyle"
+                                                    class="r17-i nl2go-default-textstyle"
                                                     style="
                                                       font-family: arial,
                                                         helvetica, sans-serif;
@@ -781,7 +996,7 @@ export const htmlContent = `
                                             </td>
                                           </tr>
                                           <tr>
-                                            <td class="r17-c" align="center">
+                                            <td class="r18-c" align="center">
                                               <table
                                                 cellspacing="0"
                                                 cellpadding="0"
@@ -797,7 +1012,7 @@ export const htmlContent = `
                                                 <tr>
                                                   <td
                                                     valign="top"
-                                                    class="r18-i"
+                                                    class="r19-i"
                                                     style="padding-bottom: 15px"
                                                   >
                                                     <table
