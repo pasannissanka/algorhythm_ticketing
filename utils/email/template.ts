@@ -1,5 +1,4 @@
-export const htmlContent = `
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+export const htmlContent = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:v="urn:schemas-microsoft-com:vml"
@@ -604,7 +603,7 @@ export const htmlContent = `
                                                         the “Algorhythm”
                                                         <strong
                                                           >(14th January)  at
-                                                          Summerfeilds,
+                                                          Summerfield's,
                                                           Kottawa</strong
                                                         >.(<a
                                                           href="https://goo.gl/maps/ZoPYLJnb541sWFWq8"
@@ -616,6 +615,13 @@ export const htmlContent = `
                                                           "
                                                           >https://goo.gl/maps/ZoPYLJnb541sWFWq8</a
                                                         >)
+                                                      </p>
+                                                      <p style="margin: 0"> </p>
+                                                      <p style="margin: 0">
+                                                        Registration starts at
+                                                        <strong
+                                                          >6.15 P.M</strong
+                                                        >
                                                       </p>
                                                       <p style="margin: 0"> </p>
                                                       <p style="margin: 0">
@@ -667,7 +673,6 @@ export const htmlContent = `
                                                     >
                                                       <img
                                                         src="{{params.qr_url}}"
-                                                        alt="QR Code"
                                                         width="264"
                                                         border="0"
                                                         class=""
@@ -1046,7 +1051,4 @@ export const htmlContent = `
       </tr>
     </table>
   </body>
-</html>
-
-
-`;
+</html>`;
