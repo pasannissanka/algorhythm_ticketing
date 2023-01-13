@@ -5,6 +5,7 @@ import { connect } from "../../../utils/db";
 import { sendEmail } from "../../../utils/email/send";
 import { ResponseBody } from "../../../utils/types";
 import { authOptions } from "../auth/[...nextauth]";
+import { nameConverter } from "../../../utils/commonFunction";
 
 const { VERCEL_URL, NEXT_PUBLIC_CALLBACK_URL } = process.env;
 
@@ -36,7 +37,7 @@ export default async function handler(
             params: {
               type,
               email,
-              name,
+              name: nameConverter(name),
               phone_number,
               qr_url: qr.image_url,
               qr_data: Buffer.from(qr.data).toString("base64"),
