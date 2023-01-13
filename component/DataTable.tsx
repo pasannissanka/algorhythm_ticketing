@@ -299,11 +299,6 @@ export default function BasicTable({
         <AttendWrapper>Attendant Count : {count}</AttendWrapper>
 
         <SearchBarWrapper>
-          <SearchBar
-            value={searched}
-            onChange={(searchVal) => requestSearch(searchVal)}
-            onCancelSearch={() => cancelSearch()}
-          />
           <ButtonWrapper>
             <Button
               size="small"
@@ -341,6 +336,11 @@ export default function BasicTable({
           </ButtonWrapper>
         </SearchBarWrapper>
         <TableWrapper>
+          <SearchBar
+            value={searched}
+            onChange={(searchVal) => requestSearch(searchVal)}
+            onCancelSearch={() => cancelSearch()}
+          />
           <TableContainer component={Paper}>
             <Table
               sx={{ minWidth: 650 }}

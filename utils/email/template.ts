@@ -72,14 +72,14 @@ export const htmlContent = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict/
     <style type="text/css" emogrify="no">
       @media (max-width: 600px) {
         .gmx-killpill {
-          content: " 3D1";
+          content: " \03D1";
         }
       }
     </style>
     <style type="text/css" emogrify="no">
       @media (max-width: 600px) {
         .gmx-killpill {
-          content: " 3D1";
+          content: " \03D1";
         }
         .r0-c {
           box-sizing: border-box !important;
@@ -549,8 +549,11 @@ export const htmlContent = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict/
                                                           style="
                                                             background-color: #ffffff;
                                                             color: #858588;
+                                                            font-family: Arial,
+                                                              helvetica,
+                                                              sans-serif;
                                                           "
-                                                          >Your e-ticket is here
+                                                          >Your E-Ticket is Here
                                                           - Algorhythm
                                                           2022</span
                                                         >
@@ -600,12 +603,12 @@ export const htmlContent = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict/
                                                       <p style="margin: 0">
                                                         Here's your official
                                                         confirmation to attend
-                                                        the “Algorhythm”
+                                                        “Algorhythm”
                                                         <strong
-                                                          >(14th January)  at
+                                                          >(14th January) at
                                                           Summerfield's,
                                                           Kottawa</strong
-                                                        >.(<a
+                                                        >. (<a
                                                           href="https://goo.gl/maps/ZoPYLJnb541sWFWq8"
                                                           title="Location"
                                                           target="_blank"
@@ -613,15 +616,14 @@ export const htmlContent = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict/
                                                             color: #0092ff;
                                                             text-decoration: underline;
                                                           "
-                                                          >https://goo.gl/maps/ZoPYLJnb541sWFWq8</a
+                                                          >Google Map
+                                                          Location</a
                                                         >)
                                                       </p>
                                                       <p style="margin: 0"> </p>
                                                       <p style="margin: 0">
                                                         Registration starts at
-                                                        <strong
-                                                          >6.15 P.M</strong
-                                                        >
+                                                        <strong>6 PM.</strong>
                                                       </p>
                                                       <p style="margin: 0"> </p>
                                                       <p style="margin: 0">
@@ -723,13 +725,6 @@ export const htmlContent = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict/
                                                         "
                                                       >
                                                          
-                                                      </p>
-                                                      <p style="margin: 0">
-                                                        Name : {{params.name}}
-                                                      </p>
-                                                      <p style="margin: 0">
-                                                        Email
-                                                         : {{params.email}}
                                                       </p>
                                                       <p style="margin: 0">
                                                         Reservation
@@ -943,9 +938,15 @@ export const htmlContent = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict/
                                                       <p style="margin: 0">
                                                         <strong
                                                           >Society of Computer
-                                                          Science | University
-                                                          of Sri
-                                                          Jayawardenapura</strong
+                                                          Science | Faculty of
+                                                          Applied
+                                                          Sciences</strong
+                                                        >
+                                                      </p>
+                                                      <p style="margin: 0">
+                                                        <strong
+                                                          >University of Sri
+                                                          Jayawardenepura</strong
                                                         >
                                                       </p>
                                                     </div>
@@ -1051,4 +1052,5 @@ export const htmlContent = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict/
       </tr>
     </table>
   </body>
-</html>`;
+</html>
+`;
