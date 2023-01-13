@@ -72,14 +72,14 @@ export const htmlContent = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict/
     <style type="text/css" emogrify="no">
       @media (max-width: 600px) {
         .gmx-killpill {
-          content: " \03D1";
+          content: " 3D1";
         }
       }
     </style>
     <style type="text/css" emogrify="no">
       @media (max-width: 600px) {
         .gmx-killpill {
-          content: " \03D1";
+          content: " 3D1";
         }
         .r0-c {
           box-sizing: border-box !important;
