@@ -623,7 +623,7 @@ export const htmlContent = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict/
                                                       <p style="margin: 0"> </p>
                                                       <p style="margin: 0">
                                                         Registration starts at
-                                                        <strong>6 PM.</strong>
+                                                        <strong> 6.00 PM.</strong>
                                                       </p>
                                                       <p style="margin: 0"> </p>
                                                       <p style="margin: 0">
