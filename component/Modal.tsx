@@ -74,10 +74,9 @@ export default function Modal({
   const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().max(30, "Max length for the name is 30.").required(),
+    name: Yup.string().required(),
     email: Yup.string()
       .matches(emailRegex, "Email is not valid")
-      .max(30, "Max length for the name is 30.")
       .required("Email is required"),
     type: Yup.string().required(),
   });
