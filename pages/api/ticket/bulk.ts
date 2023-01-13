@@ -8,6 +8,8 @@ import { authOptions } from "../auth/[...nextauth]";
 import QRCode from "qrcode";
 import { Model } from "mongoose";
 import { QRImage } from "../../../utils/db/models/qr.model";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../../utils/firebaseConfig";
 
 export default async function handler(
   req: NextApiRequest,
@@ -23,7 +25,9 @@ export default async function handler(
         promiseHandler(item, Ticket, QR)
       );
       const resolvedData = await Promise.allSettled(reqDataPromiseArr);
-      const isAllFulfilled = resolvedData.every((p) => p.status === "fulfilled");
+      const isAllFulfilled = resolvedData.every(
+        (p) => p.status === "fulfilled"
+      );
 
       if (isAllFulfilled) {
         res.status(200).json({ message: "Success", data: resolvedData });
@@ -72,10 +76,21 @@ const promiseHandler = async (
       });
 
       writableStream.on("finish", async function () {
+        const storageRef = ref(storage, `image/${id}.png`);
+
+        const snapshot = await uploadBytes(storageRef, Buffer.concat(_buf), {
+          contentType: "image/png",
+        });
+
+        const url = await getDownloadURL(snapshot.ref);
+
+        console.log("****", url);
+
         await QR.create({
           contentType: "image/png",
           data: Buffer.concat(_buf),
           ticket_id: id,
+          image_url: url,
         });
 
         resolve(ticket);
